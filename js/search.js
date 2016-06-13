@@ -99,7 +99,7 @@
 
         loadData(function(data) {
 
-            var result = data.filter(function(post) {
+            var result = data.posts.filter(function(post) {
                 return matcher(post, regExp);
             });
 
