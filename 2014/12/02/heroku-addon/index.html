@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>解决 Heroku 添加 Add-ons 的问题 | 繁书 | 记录技术与生活的笔记本</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="web服务">
+  <meta name="description" content="介绍Heroku 作为为数不多的优秀 兼顾免费 的云平台，为开发者提供不揪心 的网站托管服务
+为了对你的网站应用方便地添加各式各样的服务，Heroku 提供了 add-ons 的自助添加功能，即“附加组件”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决 Heroku 添加 Add-ons 的问题">
+<meta property="og:url" content="https://mrpeak.github.io/2014/12/02/heroku-addon/index.html">
+<meta property="og:site_name" content="繁书">
+<meta property="og:description" content="介绍Heroku 作为为数不多的优秀 兼顾免费 的云平台，为开发者提供不揪心 的网站托管服务
+为了对你的网站应用方便地添加各式各样的服务，Heroku 提供了 add-ons 的自助添加功能，即“附加组件”">
+<meta property="og:image" content="http://www.codecheese.com/wp-content/uploads/heroku-logo.png">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/1413488423_credit-cards.png">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/form.png">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/visa.png">
+<meta property="og:updated_time" content="2016-06-13T08:18:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解决 Heroku 添加 Add-ons 的问题">
+<meta name="twitter:description" content="介绍Heroku 作为为数不多的优秀 兼顾免费 的云平台，为开发者提供不揪心 的网站托管服务
+为了对你的网站应用方便地添加各式各样的服务，Heroku 提供了 add-ons 的自助添加功能，即“附加组件”">
+<meta name="twitter:image" content="http://www.codecheese.com/wp-content/uploads/heroku-logo.png">
+  
+    <link rel="alternative" href="/atom.xml" title="繁书" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://www.heroku.com/&quot;&gt;Heroku&lt;/a&gt; 作为为数不多的&lt;em&gt;优秀&lt;/em&gt; 兼顾&lt;em&gt;免费&lt;/em&gt; 的云平台，为开发者提供&lt;em&gt;不揪心&lt;/em&gt; 的网站托管服务&lt;/p&gt;
+&lt;p&gt;为了对你的网站应用方便地添加各式各样的服务，Heroku 提供了 &lt;a href=&quot;https://addons.heroku.com/&quot;&gt;add-ons&lt;/a&gt; 的自助添加功能，即“附加组件”&lt;/p&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">捻捻转儿</h5>
+        <a href="mailto:undefined" title="gfeng.peak@gmail.com" class="mail">gfeng.peak@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            文章
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            标签
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/mrpeak" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/hellopeaker" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/about"  >
+            <i class="icon icon-lg icon-link"></i>
+            关于
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>繁书 &copy; 2016</p>
+  <!--<p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme-->
+  <!--<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>-->
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">解决 Heroku 添加 Add-ons 的问题</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">解决 Heroku 添加 Add-ons 的问题</h1>
+    <h5 class="subtitle">2014-12-02</h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      
+  <article id="post-heroku-addon" class="article article-type-post" itemprop="blogPost">
+    
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web服务/">web服务</a></li></ul>
+</div>
+      </div>
+      <div class="post-body">
+
+        <aside class="post-widget" id="post-widget">
+
+          
+          <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+          
+
+          
+          <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#介绍"><span class="post-toc-text">介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#验证身份"><span class="post-toc-text">验证身份</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考链接："><span class="post-toc-text">参考链接：</span></a></li></ol>
+          </nav>
+          
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><a href="https://www.heroku.com/" target="_blank" rel="external">Heroku</a> 作为为数不多的<em>优秀</em> 兼顾<em>免费</em> 的云平台，为开发者提供<em>不揪心</em> 的网站托管服务</p>
+<p>为了对你的网站应用方便地添加各式各样的服务，Heroku 提供了 <a href="https://addons.heroku.com/" target="_blank" rel="external">add-ons</a> 的自助添加功能，即“附加组件”</p>
+<a id="more"></a>
+<p><img src="http://www.codecheese.com/wp-content/uploads/heroku-logo.png" alt="Heroku"> </p>
+<p>但是没有经过账户认证的话是无法使用免费 add-ons 的，所谓账户认证（Account Verify）就是对用户的信用卡进行认证绑定，所以，无论你是否使用付费的 add-ons ，信用卡验证这步是必须要走的。</p>
+<blockquote>
+<p>补充下，<a href="https://addons.heroku.com/heroku-postgresql" target="_blank" rel="external">heroku postgres</a> 是唯一不需要认证使用的组件，PostgreSQL 是 Heroku 默认使用的数据库，这个组件就是提供基于它的数据库服务</p>
+</blockquote>
+<p>当然，有的服务组件所在的网站单独对其服务进行提供，我使用过的如 <a href="https://addons.heroku.com/mongohq" target="_blank" rel="external">MongoHQ</a>, <a href="https://addons.heroku.com/mailgun" target="_blank" rel="external">Mailgun</a>。并且通过使用 Heroku SDK 的命令行工具也可以利用hack的方式接入组件的服务，参考：<a href="http://www.elliotbradbury.com/use-mongohq-heroku-without-verifying-account/" target="_blank" rel="external">How to use MongoHQ on Heroku without Verifying your Account</a>。不过为了能便捷全面地使用附加组件，还是推荐大家通过添加信用卡进行验证，不然下面的话我都不用写了。</p>
+<h2 id="验证身份"><a href="#验证身份" class="headerlink" title="验证身份"></a>验证身份</h2><p>首先你要有一张信用卡。普通的信用卡，如招商银行的Young卡是不可以的，常见的 <strong>Visa</strong> 和 <strong>MasterCard</strong>都支持认证的。小弟毕竟图样，对于信用卡研究的很浅，通过 <a href="http://xinyongka.baike.com/article-4442.html" target="_blank" rel="external">你知道信用卡的五大品牌是什么吗？</a> 你可以总览下五大品牌</p>
+<p><img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/1413488423_credit-cards.png" alt=""></p>
+<p>进入个人账户页面<a href="https://dashboard-next.heroku.com/account" target="_blank" rel="external">https://dashboard-next.heroku.com/account</a>，老版界面点击 <strong>Add Credit Card</strong>，新版点击 <strong>Billing</strong>，之后出现了认证弹出窗</p>
+<p><img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/form.png" alt=""></p>
+<p>这些信息都是要填满的，可以用中文填，为了今后付账的便捷，尽量还是用英文混合汉语拼音进行输入，关于 Billing Address 如何填写，引用如下：</p>
+<blockquote>
+<p>Billing address，即信用卡账单地址，要求提供Billing Address往往是为了验证信用卡使用者是否为持有者本人，所以通常Billing Address信用卡账单地址应该和Shipping address寄送地址是一致的</p>
+</blockquote>
+<p>而Shipping address是商品邮寄地址，就是寄送地址，了解下就行</p>
+<p>我用的是<em>招商银行的visa</em> ~~~~</p>
+<p><img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/visa.png" alt=""></p>
+<p>其实只要卡号和过期时间填写正确了就可以了。。。</p>
+<p><strong>！！！（如果使用别人的卡进行验证一定要通知当事人，因为信用卡是不需要密码验证的，只要知道信用卡持有者的姓名和卡表面上的基本信息就可以）</strong></p>
+<p>提交表单后就完成后会快就自动验证通过了。之后就可以开森地使用 Heroku 海量 add-ons 的 freeplan 装点你的网站应用啦</p>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><ul>
+<li><a href="http://xinyongka.baike.com/article-4442.html" target="_blank" rel="external">http://xinyongka.baike.com/article-4442.html</a></li>
+</ul>
+
+            <blockquote>
+              <p>
+                本文地址：
+                <a href="https://mrpeak.github.io/2014/12/02/heroku-addon/" target="_blank" rel="external">https://mrpeak.github.io/2014/12/02/heroku-addon/</a>
+              </p>
+              <footer><cite><a href="https://mrpeak.github.io">@繁书</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2015/01/05/browserify-text/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">使用 Browserify 时引入文本文件</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2014/09/26/jquery-events/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">查看jQuery元素真正的事件绑定</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="heroku-addon" data-title="解决 Heroku 添加 Add-ons 的问题" data-url="https://mrpeak.github.io/2014/12/02/heroku-addon/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"niannianzhuaner"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+    
+
+  </article>
+
+
+
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "解决 Heroku 添加 Add-ons 的问题",
+    pic: "https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://mrpeak.github.io/2014/12/02/heroku-addon/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259532513&web_id=1259532513"></script>
+
+
+
+
+
+</body>
+</html>

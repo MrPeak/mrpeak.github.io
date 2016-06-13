@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Mongoose 的 Promise 化 | 繁书 | 记录技术与生活的笔记本</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="MongoDB">
+  <meta name="description" content="在NodeJS环境下使用MongoDB时，作为数据库管理工具的Mongoose已经成为项目开发的标配，它丰富了Mongo的原生API，为开发者提供了扩展接口，同时以 schema-based 的方式，来操作Mongo
+在开发Node时读写数据库难免要进行频繁且深层次的回调操作好在Mongoose的读写操作都有方法以 promise 对象返回，基于这点，结合其它三方Promise类库，可以避免多重嵌">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mongoose 的 Promise 化">
+<meta property="og:url" content="https://mrpeak.github.io/2015/03/20/mongoose-promise/index.html">
+<meta property="og:site_name" content="繁书">
+<meta property="og:description" content="在NodeJS环境下使用MongoDB时，作为数据库管理工具的Mongoose已经成为项目开发的标配，它丰富了Mongo的原生API，为开发者提供了扩展接口，同时以 schema-based 的方式，来操作Mongo
+在开发Node时读写数据库难免要进行频繁且深层次的回调操作好在Mongoose的读写操作都有方法以 promise 对象返回，基于这点，结合其它三方Promise类库，可以避免多重嵌">
+<meta property="og:updated_time" content="2016-06-13T08:50:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mongoose 的 Promise 化">
+<meta name="twitter:description" content="在NodeJS环境下使用MongoDB时，作为数据库管理工具的Mongoose已经成为项目开发的标配，它丰富了Mongo的原生API，为开发者提供了扩展接口，同时以 schema-based 的方式，来操作Mongo
+在开发Node时读写数据库难免要进行频繁且深层次的回调操作好在Mongoose的读写操作都有方法以 promise 对象返回，基于这点，结合其它三方Promise类库，可以避免多重嵌">
+  
+    <link rel="alternative" href="/atom.xml" title="繁书" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;p&gt;在&lt;code&gt;NodeJS&lt;/code&gt;环境下使用&lt;code&gt;MongoDB&lt;/code&gt;时，作为数据库管理工具的&lt;code&gt;Mongoose&lt;/code&gt;已经成为项目开发的标配，它丰富了Mongo的原生API，为开发者提供了扩展接口，同时以 schema-based 的方式，来操作Mongo&lt;/p&gt;
+&lt;p&gt;在开发Node时读写数据库难免要进行频繁且深层次的回调操作好在Mongoose的读写操作都有方法以 &lt;code&gt;promise&lt;/code&gt; 对象返回，基于这点，结合其它三方Promise类库，可以避免多重嵌套的发生。（ES6 Generator 能更好的控制异步流程，结合Promise可以更好的解决 Callback Hell）&lt;/p&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">捻捻转儿</h5>
+        <a href="mailto:undefined" title="gfeng.peak@gmail.com" class="mail">gfeng.peak@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            文章
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            标签
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/mrpeak" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/hellopeaker" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/about"  >
+            <i class="icon icon-lg icon-link"></i>
+            关于
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>繁书 &copy; 2016</p>
+  <!--<p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme-->
+  <!--<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>-->
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Mongoose 的 Promise 化</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">Mongoose 的 Promise 化</h1>
+    <h5 class="subtitle">2015-03-20</h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      
+  <article id="post-mongoose-promise" class="article article-type-post" itemprop="blogPost">
+    
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
+</div>
+      </div>
+      <div class="post-body">
+
+        <aside class="post-widget" id="post-widget">
+
+          
+          <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+          
+
+          
+          <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Without-promise"><span class="post-toc-text">Without promise</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#With-promise-Q"><span class="post-toc-text">With promise (Q)</span></a></li></ol>
+          </nav>
+          
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>在<code>NodeJS</code>环境下使用<code>MongoDB</code>时，作为数据库管理工具的<code>Mongoose</code>已经成为项目开发的标配，它丰富了Mongo的原生API，为开发者提供了扩展接口，同时以 schema-based 的方式，来操作Mongo</p>
+<p>在开发Node时读写数据库难免要进行频繁且深层次的回调操作好在Mongoose的读写操作都有方法以 <code>promise</code> 对象返回，基于这点，结合其它三方Promise类库，可以避免多重嵌套的发生。（ES6 Generator 能更好的控制异步流程，结合Promise可以更好的解决 Callback Hell）</p>
+<a id="more"></a>
+<blockquote>
+<p>Talk is cheap. Show me the code</p>
+</blockquote>
+<p>先建立我们的数据模型 —— Family</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line"><span class="keyword">var</span> Schema = mongoose.Schema;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">var</span> FamilySchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">	generation: &#123;</span><br><span class="line">    	type: <span class="built_in">Number</span>,</span><br><span class="line">        <span class="keyword">default</span>: <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    sex: &#123;</span><br><span class="line">    	type: <span class="built_in">String</span>,</span><br><span class="line">        <span class="keyword">default</span>: <span class="string">'male'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    name: &#123;</span><br><span class="line">    	type: <span class="built_in">String</span>,</span><br><span class="line">        <span class="keyword">default</span>: <span class="string">''</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);  </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Family = mongoose.model(<span class="string">'Family'</span>, FamilySchema);</span><br></pre></td></tr></table></figure>
+<p><code>Mongsoose</code> 的Model层API 大致分为：创建（Create）、更新（Update）、读取（Find）和删除（Remove）四类，<em>create</em> 和 <em>remove</em> 操作返回 <code>promise</code> 对象，<em>update</em> 和 <em>find</em> 操作返回 <em>query</em> 对象，需要注意的是，使用 <strong>find前缀</strong> 方法（如：Model.findOneAndRemove、Model.findByIdAndRemove、Model.findByIdAndUpdate）时返回对象均为 <code>query</code> </p>
+<p>对于 <code>query</code> 对象，只需要对其调用 <code>exec</code> 方法，就可以返回 <code>promise</code> 对象了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Query</span><br><span class="line"> */</span></span><br><span class="line">Family.findOne(&#123;name: <span class="string">'转二'</span>&#125;).exec(); <span class="comment">// Return promise</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Update</span><br><span class="line"> */</span></span><br><span class="line">Family.findByIdAndUpdate(id, &#123;$set: &#123;</span><br><span class="line">    name: <span class="string">'转二'</span>,</span><br><span class="line">   	generation: <span class="number">3</span></span><br><span class="line">&#125;&#125;).exec(); <span class="comment">// Return promise</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Create</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">var</span> array = [&#123; </span><br><span class="line">	generation: <span class="number">4</span>,</span><br><span class="line">    sex: female,</span><br><span class="line">    name: <span class="string">'虫虫'</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">	generation: <span class="number">3</span>,</span><br><span class="line">    sex: female,</span><br><span class="line">    name: <span class="string">'芮芮'</span></span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line">Family.create(array); <span class="comment">// Return promise</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Delete</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">Family.remove(&#123; name: <span class="string">'转二'</span> &#125;); <span class="comment">// Return promise</span></span><br></pre></td></tr></table></figure>
+<p>有了 <code>promise</code> 返回，异步梦魇已经解决一半了</p>
+<p>在 <code>promise</code> 类库中我比较喜欢<code>Q</code>，相比于其他同类工具，Q比较简单，而且和 <code>Angular</code> 的 <code>$q</code> 和 <code>jQuery</code> 的 <code>Deferred</code> 语法相似。不过还是推荐使用 <a href="https://github.com/jakearchibald/es6-promise" target="_blank" rel="external">es6-promise</a>，作为 <em>polyfill</em> 可以让代码在未来无缝衔接 es6</p>
+<p>为了举例子，现在创建第二个数据模型 —— Company</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line"><span class="keyword">var</span> Schema = mongoose.Schema;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> CompanyMemberSchema = <span class="keyword">new</span> mongoose.Schema(&#123;</span><br><span class="line">	empName: <span class="built_in">String</span>,</span><br><span class="line">	empId: <span class="built_in">String</span>,</span><br><span class="line">    sex: <span class="built_in">String</span></span><br><span class="line">&#125;);  </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> CompanyMember = mongoose.model(<span class="string">'CompanyMember'</span>, CompanyMemberSchema);</span><br></pre></td></tr></table></figure>
+<p>我们想要从一个 <code>Family</code> 中通过 <code>_id</code> 找到一个家庭成员，通过这个成员的名字，在某个确定的公司里查找此人，然后把此人从公司名单中移除</p>
+<h4 id="Without-promise"><a href="#Without-promise" class="headerlink" title="Without promise"></a>Without promise</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id = <span class="string">"1237213921936129"</span>;</span><br><span class="line"></span><br><span class="line">Family.find(&#123;_id: id&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err, persons</span>) </span>&#123;</span><br><span class="line">	CompanyMember.findOne(&#123;</span><br><span class="line">		<span class="string">'empName'</span>: persons[<span class="number">0</span>][<span class="string">'name'</span>]</span><br><span class="line">	&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err, person</span>) </span>&#123;</span><br><span class="line">		CompanyMember.remove(&#123;</span><br><span class="line">			<span class="string">'empId'</span>: person.empId</span><br><span class="line">		&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err, person</span>) </span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(err) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="built_in">console</span>.error(err);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'Remove'</span> + person + <span class="string">'successfully!'</span>);</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="With-promise-Q"><a href="#With-promise-Q" class="headerlink" title="With promise (Q)"></a>With promise (Q)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id = <span class="string">"1237213921936129"</span>;</span><br><span class="line">  </span><br><span class="line">Q.fcall(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> Family.findOne(&#123;</span><br><span class="line">    _id: id</span><br><span class="line">  &#125;).exec();</span><br><span class="line">  <span class="comment">// 返回 promise</span></span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">person</span>) </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> CompanyMember.findOne(&#123;</span><br><span class="line">	empName: person[<span class="string">'name'</span>]</span><br><span class="line">  &#125;).exec();</span><br><span class="line">  <span class="comment">// 返回 promise</span></span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">person</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> Company.remove(&#123;empId: person[<span class="string">'empId'</span>]&#125;);</span><br><span class="line">  <span class="comment">// 返回 promise</span></span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">person</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Remove'</span> + person + <span class="string">'successfully!'</span>);</span><br><span class="line"></span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 捕捉错误</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.error(err);</span><br><span class="line"></span><br><span class="line">&#125;).done();</span><br><span class="line">  <span class="comment">// 结束链式调用</span></span><br></pre></td></tr></table></figure>
+<p>至于并发控制，<code>Q</code> 也有解决方案：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Q.spread([promiseA, promiseB], <span class="function"><span class="keyword">function</span>(<span class="params">A_value, B_value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'A_value'</span>: A_value);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'B_value'</span>: B_value);</span><br><span class="line">&#125;, funcion(err) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">console</span>.error(err);	</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Q的使用查阅 <a href="http://documentup.com/kriskowal/q/" target="_blank" rel="external">http://documentup.com/kriskowal/q/</a><br>Mongoose的使用查阅 <a href="http://mongoosejs.com/docs/guide.html" target="_blank" rel="external">http://mongoosejs.com/docs/guide.html</a></p>
+<p>下一篇会聊一聊 <code>Generator</code> + <code>Promise</code> 组合来解决 Mongoose 的异步回调问题</p>
+
+            <blockquote>
+              <p>
+                本文地址：
+                <a href="https://mrpeak.github.io/2015/03/20/mongoose-promise/" target="_blank" rel="external">https://mrpeak.github.io/2015/03/20/mongoose-promise/</a>
+              </p>
+              <footer><cite><a href="https://mrpeak.github.io">@繁书</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2015/07/02/vscode-guide/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Visual Studio Code 不完全使用指南</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2015/02/23/cool-fe/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">不为人知的前端冷知识</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="mongoose-promise" data-title="Mongoose 的 Promise 化" data-url="https://mrpeak.github.io/2015/03/20/mongoose-promise/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"niannianzhuaner"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+    
+
+  </article>
+
+
+
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "Mongoose 的 Promise 化",
+    pic: "https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://mrpeak.github.io/2015/03/20/mongoose-promise/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259532513&web_id=1259532513"></script>
+
+
+
+
+
+</body>
+</html>

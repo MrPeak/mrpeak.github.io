@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用 Highchart 绘制 SVG | 繁书 | 记录技术与生活的笔记本</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="前端,SVG,图表">
+  <meta name="description" content="介绍做过数据可视化的同学对于HIGHCHARTS可能并不陌生，甚至是家族的其他两个成员 HIGHSTOCK 和 HIGHMAPS 也使用过
+它对新老浏览器的兼容性和响应式特性是我们偏爱使用它的主要原因，当然文档齐全和demo丰富也是它的特点
+下面是它的兼容性表格：
+
+
+
+Brand
+Versions supported
+
+
+
+
+Internet Explorer
+6.0 +
+
+
+Firefox
+2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 Highchart 绘制 SVG">
+<meta property="og:url" content="https://mrpeak.github.io/2014/09/06/highchart-svg/index.html">
+<meta property="og:site_name" content="繁书">
+<meta property="og:description" content="介绍做过数据可视化的同学对于HIGHCHARTS可能并不陌生，甚至是家族的其他两个成员 HIGHSTOCK 和 HIGHMAPS 也使用过
+它对新老浏览器的兼容性和响应式特性是我们偏爱使用它的主要原因，当然文档齐全和demo丰富也是它的特点
+下面是它的兼容性表格：
+
+
+
+Brand
+Versions supported
+
+
+
+
+Internet Explorer
+6.0 +
+
+
+Firefox
+2">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/svg.png">
+<meta property="og:updated_time" content="2016-06-13T08:05:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用 Highchart 绘制 SVG">
+<meta name="twitter:description" content="介绍做过数据可视化的同学对于HIGHCHARTS可能并不陌生，甚至是家族的其他两个成员 HIGHSTOCK 和 HIGHMAPS 也使用过
+它对新老浏览器的兼容性和响应式特性是我们偏爱使用它的主要原因，当然文档齐全和demo丰富也是它的特点
+下面是它的兼容性表格：
+
+
+
+Brand
+Versions supported
+
+
+
+
+Internet Explorer
+6.0 +
+
+
+Firefox
+2">
+<meta name="twitter:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/svg.png">
+  
+    <link rel="alternative" href="/atom.xml" title="繁书" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;做过数据可视化的同学对于&lt;a href=&quot;http://www.highcharts.com/&quot;&gt;HIGHCHARTS&lt;/a&gt;可能并不陌生，甚至是家族的其他两个成员 &lt;a href=&quot;http://www.highcharts.com/products/highstock&quot;&gt;HIGHSTOCK&lt;/a&gt; 和 &lt;a href=&quot;http://www.highcharts.com/products/highmaps&quot;&gt;HIGHMAPS&lt;/a&gt; 也使用过&lt;/p&gt;
+&lt;p&gt;它对新老浏览器的兼容性和响应式特性是我们偏爱使用它的主要原因，当然文档齐全和demo丰富也是它的特点&lt;/p&gt;
+&lt;p&gt;下面是它的兼容性表格：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Brand&lt;/th&gt;
+&lt;th&gt;Versions supported&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Internet Explorer&lt;/td&gt;
+&lt;td&gt;6.0 +&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Firefox&lt;/td&gt;
+&lt;td&gt;2.0 +&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Chrome&lt;/td&gt;
+&lt;td&gt;1.0 +&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Safari&lt;/td&gt;
+&lt;td&gt;4.0 +&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Opera&lt;/td&gt;
+&lt;td&gt;9.0 +&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;iOS (Safari)&lt;/td&gt;
+&lt;td&gt;3.0 +&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Android Browser&lt;/td&gt;
+&lt;td&gt;2.0 +&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">捻捻转儿</h5>
+        <a href="mailto:undefined" title="gfeng.peak@gmail.com" class="mail">gfeng.peak@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            文章
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            标签
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/mrpeak" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/hellopeaker" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/about"  >
+            <i class="icon icon-lg icon-link"></i>
+            关于
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>繁书 &copy; 2016</p>
+  <!--<p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme-->
+  <!--<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>-->
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">用 Highchart 绘制 SVG</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">用 Highchart 绘制 SVG</h1>
+    <h5 class="subtitle">2014-09-06</h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      
+  <article id="post-highchart-svg" class="article article-type-post" itemprop="blogPost">
+    
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVG/">SVG</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图表/">图表</a></li></ul>
+</div>
+      </div>
+      <div class="post-body">
+
+        <aside class="post-widget" id="post-widget">
+
+          
+          <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+          
+
+          
+          <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#介绍"><span class="post-toc-text">介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#进入正题"><span class="post-toc-text">进入正题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Renderder"><span class="post-toc-text">Renderder</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#element"><span class="post-toc-text">element</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一言不合-开始编码"><span class="post-toc-text">一言不合, 开始编码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#绘制原理："><span class="post-toc-text">绘制原理：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#demo展示"><span class="post-toc-text">demo展示</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#SVG展示："><span class="post-toc-text">SVG展示：</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考链接："><span class="post-toc-text">参考链接：</span></a></li></ol>
+          </nav>
+          
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>做过数据可视化的同学对于<a href="http://www.highcharts.com/" target="_blank" rel="external">HIGHCHARTS</a>可能并不陌生，甚至是家族的其他两个成员 <a href="http://www.highcharts.com/products/highstock" target="_blank" rel="external">HIGHSTOCK</a> 和 <a href="http://www.highcharts.com/products/highmaps" target="_blank" rel="external">HIGHMAPS</a> 也使用过</p>
+<p>它对新老浏览器的兼容性和响应式特性是我们偏爱使用它的主要原因，当然文档齐全和demo丰富也是它的特点</p>
+<p>下面是它的兼容性表格：</p>
+<table>
+<thead>
+<tr>
+<th>Brand</th>
+<th>Versions supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internet Explorer</td>
+<td>6.0 +</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>2.0 +</td>
+</tr>
+<tr>
+<td>Chrome</td>
+<td>1.0 +</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>4.0 +</td>
+</tr>
+<tr>
+<td>Opera</td>
+<td>9.0 +</td>
+</tr>
+<tr>
+<td>iOS (Safari)</td>
+<td>3.0 +</td>
+</tr>
+<tr>
+<td>Android Browser</td>
+<td>2.0 +</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<p>基本覆盖了主要的桌面和移动浏览器，即使在天朝也可以放心使用，在IE9以下版本的浏览器会采用VML的降级方式渲染图形，在Android 2.X的原生浏览器会使用Canvas渲染图形</p>
+<p>使用<a href="http://creativecommons.org/licenses/by-nc/3.0/" target="_blank" rel="external">非商用证书</a>可以免费使用 Highchart 的产品，如果商用的话，就要花费一笔购买许可证书之后再使用</p>
+<p>使用API绘制图表、地图等等再这里就不细说了，绘制自定义图形是重点</p>
+<p>当然，使用 d3, raphael, sylvester, ocanvas, two.js, svg.js, snap.svg 等图形库也可以帮助你绘制自定义图形，但是鉴于 HIGHCHART 的诸多优点，我习惯使用它</p>
+<h2 id="进入正题"><a href="#进入正题" class="headerlink" title="进入正题"></a>进入正题</h2><h3 id="Renderder"><a href="#Renderder" class="headerlink" title="Renderder"></a>Renderder</h3><p><code>Renderer</code> 这个构造器是绘制的核心，创建这个构造器的实例可以采用下面的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> renderer = <span class="keyword">new</span> Highcharts.Renderer(parentNode, width, height);</span><br></pre></td></tr></table></figure>
+<p>当调用 <code>highcharts</code> 方法时内部的 <code>this.renderer</code> 就是一个 <code>Renderer</code> 构造器的实例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'#container'</span>).highcharts(&#123;</span><br><span class="line">    chart: &#123;</span><br><span class="line">        backgroundColor: <span class="string">'white'</span>,</span><br><span class="line">        events: &#123;</span><br><span class="line">            load: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="comment">// Draw the flow chart</span></span><br><span class="line">                <span class="keyword">var</span> ren = <span class="keyword">this</span>.renderer,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在 highcharts-core 源码里我们可以看到，在Renderder的原型方法中，我们可以独立于 Chart 单独绘图的方法包括：</p>
+<ul>
+<li>path : 绘制路径</li>
+<li>circle : 绘制圆形</li>
+<li>arc : 绘制拱形</li>
+<li>rect : 绘制矩形</li>
+<li>g : 创建用于把相关元素进行组合的容器元素</li>
+<li>image : 显示图片</li>
+<li>text : 显示文字</li>
+<li>label :  绘制一个具有阴影、边框、（渐变）背景色的 Label </li>
+<li>button:  绘制一个具有相应状态（hover, active .etc）的按钮，并可以绑定点击事件的回调函数</li>
+</ul>
+<h3 id="element"><a href="#element" class="headerlink" title="element"></a>element</h3><p>Element 构造器是 highchart 里 svg 元素 的 <code>constructor</code>，它也提供了一些实用的原型方法供实例调用：</p>
+<ul>
+<li>add : 像渲染画布中添加元素</li>
+<li>animate : 对 svg/vml 元素使用动画效果，方法同 jQuery <code>animate()</code> 方法</li>
+<li>attr : 为 svg/vml 元素添加属性，方法同 jQuery <code>attr</code> 方法</li>
+<li>css : 不罗嗦。。同 jQuery</li>
+<li>destroy : 删除元素并释放内存</li>
+<li>on : 为元素绑定事件处理函数</li>
+<li>toFront : 前置元素</li>
+</ul>
+<h3 id="一言不合-开始编码"><a href="#一言不合-开始编码" class="headerlink" title="一言不合, 开始编码"></a>一言不合, 开始编码</h3><p>以NCZ大师那篇划时代的<a href="http://www.nczonline.net/blog/2013/10/07/node-js-and-the-new-web-front-end/" target="_blank" rel="external">前后端分离文章</a>的配图为目标，用 Renderer 实例来绘制相同的原理图</p>
+<p><img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/svg.png" alt="svg demo"></p>
+<p>为了节省时间只画了上半部分</p>
+<h3 id="绘制原理："><a href="#绘制原理：" class="headerlink" title="绘制原理："></a>绘制原理：</h3><p>添加前端部分的分组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//declare Front-End part</span></span><br><span class="line"><span class="keyword">var</span> frontEnd = render.g().add();</span><br></pre></td></tr></table></figure>
+<p>用 <code>rect()</code> 方法添加前端部分的底层画布，其实就是先声明一个矩形，由于 SVG 没有 <code>z-index</code> 的概念，因此绘制的顺序决定了元素是否显示（即覆盖与否），使用 highcharts 元素内置的 <code>toFront()</code> 方法可以让元素前置显示，但是在编写时保证清晰的顺序是最好的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//make canvas for front-end</span></span><br><span class="line"><span class="keyword">var</span> FECanvas = render.rect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">600</span>, <span class="number">360</span>).attr(&#123;</span><br><span class="line">  <span class="string">'fill'</span>: <span class="string">'#FDEADA'</span></span><br><span class="line">&#125;).add(frontEnd);</span><br></pre></td></tr></table></figure>
+<p>生成左侧文字，添加到分组，注意 <code>text()</code> 方法的后两个参数为 x 和 y 坐标</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">render.text(<span class="string">'Front-End'</span>, <span class="number">45</span>, <span class="number">164</span>).attr(&#123;</span><br><span class="line">  <span class="string">'font-size'</span>: <span class="string">'19px'</span>,</span><br><span class="line">  <span class="string">'font-weight'</span>: <span class="string">'bold'</span></span><br><span class="line">&#125;).add(frontEnd);</span><br></pre></td></tr></table></figure>
+<p>为第一个 label 创建分组，来盛放 chrome 那张 logo 和里面那个有边框的 label ，使用 <code>image()</code> 方法引入图片，再用 <code>rect</code> 和 <code>text</code> 组合的方式生成 Layer UI 的 label</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// handle FEGrah group</span></span><br><span class="line"><span class="keyword">var</span> FEGrah = render.g().add(frontEnd);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为了做出阴影的效果，先生成的矩形被覆盖，但是它的尺寸更大些，因而会水平输出1px的偏移边框，竖直露出2px的偏移边框</span></span><br><span class="line">render.rect(<span class="number">240</span>, <span class="number">25</span>, <span class="number">341</span>, <span class="number">88</span>, <span class="number">2</span>).attr(&#123;</span><br><span class="line">    fill: <span class="string">'#fff'</span>,</span><br><span class="line">    stroke: <span class="string">'#A09286'</span>,</span><br><span class="line">    <span class="string">'stroke-width'</span>: <span class="string">'6px'</span>,</span><br><span class="line">    <span class="string">'stroke-opacity'</span>: <span class="string">'0.3'</span></span><br><span class="line">&#125;).add(FEGrah);</span><br><span class="line"></span><br><span class="line">render.rect(<span class="number">240</span>, <span class="number">25</span>, <span class="number">340</span>, <span class="number">86</span>, <span class="number">2</span>).attr(&#123;</span><br><span class="line">  <span class="string">'fill'</span>: <span class="string">'#4F81BD'</span>,</span><br><span class="line">  <span class="string">'stroke'</span>: <span class="string">'#fff'</span>,</span><br><span class="line">  <span class="string">'stroke-width'</span>: <span class="string">'4px'</span></span><br><span class="line">&#125;).add(FEGrah);</span><br><span class="line"></span><br><span class="line"><span class="comment">//draw chorme logo</span></span><br><span class="line">render.image(<span class="string">'http://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_(2011).png'</span>, <span class="number">250</span>, <span class="number">30</span>, <span class="number">75</span>, <span class="number">75</span>)</span><br><span class="line">.add(FEGrah);</span><br><span class="line"></span><br><span class="line">render.rect(<span class="number">353</span>, <span class="number">46</span>, <span class="number">212</span>, <span class="number">47</span>, <span class="number">2</span>).attr(&#123;</span><br><span class="line">  fill: <span class="string">'#A09286'</span>,</span><br><span class="line">  stroke: <span class="string">'#A09286'</span>,</span><br><span class="line">  <span class="string">'stroke-width'</span>: <span class="string">'6px'</span>,</span><br><span class="line">  <span class="string">'stroke-opacity'</span>: <span class="string">'0.3'</span></span><br><span class="line">&#125;).add(FEGrah);</span><br><span class="line"></span><br><span class="line">render.rect(<span class="number">353</span>, <span class="number">46</span>, <span class="number">210</span>, <span class="number">46</span>, <span class="number">2</span>).attr(&#123;</span><br><span class="line">  <span class="string">'fill'</span>: <span class="string">'#9BBB59'</span>,</span><br><span class="line">  <span class="string">'stroke'</span>: <span class="string">'#fff'</span>,</span><br><span class="line">  <span class="string">'stroke-width'</span>: <span class="string">'4px'</span></span><br><span class="line">&#125;).add(FEGrah);</span><br><span class="line"></span><br><span class="line">render.text(<span class="string">'UI Layer'</span>, <span class="number">425</span>, <span class="number">75</span>).attr(&#123;</span><br><span class="line">  <span class="string">'font-size'</span>: <span class="string">'19px'</span></span><br><span class="line">&#125;).css(&#123;</span><br><span class="line">  <span class="string">'color'</span>: <span class="string">'#fff'</span></span><br><span class="line">&#125;).add(FEGrah);</span><br><span class="line"></span><br><span class="line">render.text(<span class="string">'Browser'</span>, <span class="number">360</span>, <span class="number">140</span>).attr(&#123;</span><br><span class="line">  <span class="string">'font-size'</span>: <span class="string">'19px'</span>,</span><br><span class="line">  <span class="string">'font-weight'</span>: <span class="string">'bold'</span></span><br><span class="line">&#125;).add(FEGrah);</span><br></pre></td></tr></table></figure>
+<p>下图 nodejs logo 所在的 label 采用了 <code>label()</code> 方法来生成，传入文字和坐标，在 <code>attr() 和 css()</code> 方法里指定一些样式让生成的label更美观</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">render.label(<span class="string">'UI Layer'</span>, <span class="number">353</span>, <span class="number">257</span>).attr(&#123;</span><br><span class="line">  fill: <span class="string">"#F79646"</span>,</span><br><span class="line">  stroke: <span class="string">'white'</span>,</span><br><span class="line">  <span class="string">'stroke-width'</span>: <span class="number">4</span>,</span><br><span class="line">  padding: <span class="number">12</span>,</span><br><span class="line">  <span class="comment">// 指定圆角半径</span></span><br><span class="line">  r: <span class="number">2</span>,</span><br><span class="line">  width: <span class="number">185</span></span><br><span class="line">&#125;).css(&#123;</span><br><span class="line">  textAlign: <span class="string">'center'</span>,</span><br><span class="line">  color: <span class="string">'#fff'</span>,</span><br><span class="line">  fontSize: <span class="string">'19px'</span></span><br><span class="line"><span class="comment">// 添加进 FEGrah2 分组  </span></span><br><span class="line">&#125;).add(FEGrah2)</span><br><span class="line"><span class="comment">// shadow() 方法传入 true 时，label 自带 drop-shadow</span></span><br><span class="line">.shadow(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<p>箭头部分是难点，箭头采用了 <code>path()</code> 方法绘制，定义坐标系原点，然后通过路径数组来自定义路径轨迹，箭头1便是这么画出来的，传入数组：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 'm' 声明了坐标系原点位于（370, 142）处，小写字母代表绝对值，大写字母代表相对值</span></span><br><span class="line"><span class="comment">// 'l' 声明了接下来要连线到后面数值坐标位置，表示相对距离，如向左移动 `25px`, 向下移动 `36px`</span></span><br><span class="line"><span class="comment">// 向右移动13px，竖直不变</span></span><br><span class="line"><span class="comment">// 水平不变，向下移动 `55px`</span></span><br><span class="line"><span class="comment">// 这样绘制最后可绘制出一个宽体箭头</span></span><br><span class="line"><span class="keyword">var</span> arrowPath = [<span class="string">'m'</span>, <span class="number">370</span>, <span class="number">142</span>, <span class="string">'l'</span>, <span class="number">-25</span>, <span class="number">36</span>, <span class="number">13</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">55</span>, <span class="number">24</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">-55</span>, <span class="number">13</span>, <span class="number">0</span>, <span class="number">-25</span>, <span class="number">-36</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> narrow = render.path(arrowPath).attr(&#123;</span><br><span class="line">  stroke: <span class="string">'#EC9694'</span>,</span><br><span class="line">  <span class="string">'stroke-width'</span>: <span class="string">'2'</span>,</span><br><span class="line">  fill: <span class="string">'pink'</span></span><br><span class="line">&#125;).add(FENarrow);</span><br></pre></td></tr></table></figure>
+<p>为了节省精力，右边颠倒的箭头我们采用偷懒的方式，复制左边的箭头，然后把复制的箭头放进一个分组中，然后对这个单独的分组添加属性 <code>transform</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> narrow2 = render.path(arrowPath).attr(&#123;</span><br><span class="line">  stroke: <span class="string">'#EC9694'</span>,</span><br><span class="line">  <span class="string">'stroke-width'</span>: <span class="string">'2'</span>,</span><br><span class="line">  fill: <span class="string">'pink'</span></span><br><span class="line">&#125;).add(FENarrow2);</span><br><span class="line"></span><br><span class="line"><span class="comment">// FENarrow2是个单独的分组</span></span><br><span class="line">FENarrow2.attr(&#123;</span><br><span class="line">  <span class="comment">// rotate(deg, x, y)，分辨传入旋转角度、旋转中心横坐标和旋转中心竖坐标</span></span><br><span class="line">  <span class="string">'transform'</span>: <span class="string">'rotate(-180 397 189)'</span></span><br><span class="line">  <span class="comment">// 这样便实现了对左侧箭头的复制，并进行倒置、平移</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="demo展示"><a href="#demo展示" class="headerlink" title="demo展示"></a>demo展示</h3><iframe width="100%" height="500" src="http://jsfiddle.net/mrpeak/qdqvcpmt/1/embedded/result,js,html,css/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+
+<h3 id="SVG展示："><a href="#SVG展示：" class="headerlink" title="SVG展示："></a>SVG展示：</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">version</span>=<span class="string">"1.1"</span> <span class="attr">style</span>=<span class="string">"font-family:&amp;quot;Lucida Grande&amp;quot;, &amp;quot;Lucida Sans Unicode&amp;quot;, Arial, Helvetica, sans-serif;font-size:12px;"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/2000/svg"</span> <span class="attr">width</span>=<span class="string">"600"</span> <span class="attr">height</span>=<span class="string">"660"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">desc</span>&gt;</span>Created with Highcharts 4.0.3<span class="tag">&lt;/<span class="name">desc</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">defs</span>&gt;</span><span class="tag">&lt;/<span class="name">defs</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">g</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"0"</span> <span class="attr">y</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">"600"</span> <span class="attr">height</span>=<span class="string">"360"</span> <span class="attr">fill</span>=<span class="string">"#FDEADA"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">"45"</span> <span class="attr">y</span>=<span class="string">"164"</span> <span class="attr">font-size</span>=<span class="string">"19px"</span> <span class="attr">font-weight</span>=<span class="string">"bold"</span>&gt;</span>Front-End<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">g</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"240"</span> <span class="attr">y</span>=<span class="string">"25"</span> <span class="attr">width</span>=<span class="string">"341"</span> <span class="attr">height</span>=<span class="string">"88"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span> <span class="attr">fill</span>=<span class="string">"#fff"</span> <span class="attr">stroke</span>=<span class="string">"#A09286"</span> <span class="attr">stroke-width</span>=<span class="string">"6px"</span> <span class="attr">stroke-opacity</span>=<span class="string">"0.3"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"240"</span> <span class="attr">y</span>=<span class="string">"25"</span> <span class="attr">width</span>=<span class="string">"340"</span> <span class="attr">height</span>=<span class="string">"86"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span> <span class="attr">fill</span>=<span class="string">"#4F81BD"</span> <span class="attr">stroke</span>=<span class="string">"#fff"</span> <span class="attr">stroke-width</span>=<span class="string">"4px"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">image</span> <span class="attr">preserveAspectRatio</span>=<span class="string">"none"</span> <span class="attr">x</span>=<span class="string">"250"</span> <span class="attr">y</span>=<span class="string">"30"</span> <span class="attr">width</span>=<span class="string">"75"</span> <span class="attr">height</span>=<span class="string">"75"</span> <span class="attr">xlink:href</span>=<span class="string">"http://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_(2011).png"</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"353"</span> <span class="attr">y</span>=<span class="string">"46"</span> <span class="attr">width</span>=<span class="string">"212"</span> <span class="attr">height</span>=<span class="string">"47"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span> <span class="attr">fill</span>=<span class="string">"#A09286"</span> <span class="attr">stroke</span>=<span class="string">"#A09286"</span> <span class="attr">stroke-width</span>=<span class="string">"6px"</span> <span class="attr">stroke-opacity</span>=<span class="string">"0.3"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"353"</span> <span class="attr">y</span>=<span class="string">"46"</span> <span class="attr">width</span>=<span class="string">"210"</span> <span class="attr">height</span>=<span class="string">"46"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span> <span class="attr">fill</span>=<span class="string">"#9BBB59"</span> <span class="attr">stroke</span>=<span class="string">"#fff"</span> <span class="attr">stroke-width</span>=<span class="string">"4px"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">"425"</span> <span class="attr">y</span>=<span class="string">"75"</span> <span class="attr">font-size</span>=<span class="string">"19px"</span> <span class="attr">style</span>=<span class="string">"color:#fff;fill:#fff;"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tspan</span>&gt;</span>UI Layer<span class="tag">&lt;/<span class="name">tspan</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">"360"</span> <span class="attr">y</span>=<span class="string">"140"</span> <span class="attr">font-size</span>=<span class="string">"19px"</span> <span class="attr">font-weight</span>=<span class="string">"bold"</span>&gt;</span>Browser<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">g</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"240"</span> <span class="attr">y</span>=<span class="string">"240"</span> <span class="attr">width</span>=<span class="string">"341"</span> <span class="attr">height</span>=<span class="string">"88"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span> <span class="attr">fill</span>=<span class="string">"#fff"</span> <span class="attr">stroke</span>=<span class="string">"#A09286"</span> <span class="attr">stroke-width</span>=<span class="string">"6px"</span> <span class="attr">stroke-opacity</span>=<span class="string">"0.3"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"240"</span> <span class="attr">y</span>=<span class="string">"240"</span> <span class="attr">width</span>=<span class="string">"340"</span> <span class="attr">height</span>=<span class="string">"86"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span> <span class="attr">fill</span>=<span class="string">"#4F81BD"</span> <span class="attr">stroke</span>=<span class="string">"#fff"</span> <span class="attr">stroke-width</span>=<span class="string">"4px"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">image</span> <span class="attr">preserveAspectRatio</span>=<span class="string">"none"</span> <span class="attr">x</span>=<span class="string">"245"</span> <span class="attr">y</span>=<span class="string">"255"</span> <span class="attr">width</span>=<span class="string">"100"</span> <span class="attr">height</span>=<span class="string">"55"</span> <span class="attr">xlink:href</span>=<span class="string">"http://nodejs.org/images/logos/nodejs.png"</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">g</span> <span class="attr">style</span>=<span class="string">"text-align:center;"</span> <span class="attr">transform</span>=<span class="string">"translate(353,257)"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"0"</span> <span class="attr">y</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">"209"</span> <span class="attr">height</span>=<span class="string">"47"</span> <span class="attr">strokeWidth</span>=<span class="string">"4"</span> <span class="attr">fill</span>=<span class="string">"none"</span> <span class="attr">stroke</span>=<span class="string">"black"</span> <span class="attr">stroke-width</span>=<span class="string">"5"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span> <span class="attr">isShadow</span>=<span class="string">"true"</span> <span class="attr">stroke-opacity</span>=<span class="string">"0.049999999999999996"</span> <span class="attr">transform</span>=<span class="string">"translate(1, 1)"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"0"</span> <span class="attr">y</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">"209"</span> <span class="attr">height</span>=<span class="string">"47"</span> <span class="attr">strokeWidth</span>=<span class="string">"4"</span> <span class="attr">fill</span>=<span class="string">"none"</span> <span class="attr">stroke</span>=<span class="string">"black"</span> <span class="attr">stroke-width</span>=<span class="string">"3"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span> <span class="attr">isShadow</span>=<span class="string">"true"</span> <span class="attr">stroke-opacity</span>=<span class="string">"0.09999999999999999"</span> <span class="attr">transform</span>=<span class="string">"translate(1, 1)"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"0"</span> <span class="attr">y</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">"209"</span> <span class="attr">height</span>=<span class="string">"47"</span> <span class="attr">strokeWidth</span>=<span class="string">"4"</span> <span class="attr">fill</span>=<span class="string">"none"</span> <span class="attr">stroke</span>=<span class="string">"black"</span> <span class="attr">stroke-width</span>=<span class="string">"1"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span> <span class="attr">isShadow</span>=<span class="string">"true"</span> <span class="attr">stroke-opacity</span>=<span class="string">"0.15"</span> <span class="attr">transform</span>=<span class="string">"translate(1, 1)"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">"0"</span> <span class="attr">y</span>=<span class="string">"0"</span> <span class="attr">width</span>=<span class="string">"209"</span> <span class="attr">height</span>=<span class="string">"47"</span> <span class="attr">strokeWidth</span>=<span class="string">"4"</span> <span class="attr">fill</span>=<span class="string">"#F79646"</span> <span class="attr">stroke</span>=<span class="string">"white"</span> <span class="attr">stroke-width</span>=<span class="string">"4"</span> <span class="attr">rx</span>=<span class="string">"2"</span> <span class="attr">ry</span>=<span class="string">"2"</span>&gt;</span><span class="tag">&lt;/<span class="name">rect</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">"67.5"</span> <span class="attr">zIndex</span>=<span class="string">"1"</span> <span class="attr">style</span>=<span class="string">"font-size:19px;color:#fff;fill:#fff;"</span> <span class="attr">y</span>=<span class="string">"30"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">tspan</span>&gt;</span>UI Layer<span class="tag">&lt;/<span class="name">tspan</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">"375"</span> <span class="attr">y</span>=<span class="string">"354"</span> <span class="attr">font-size</span>=<span class="string">"19"</span> <span class="attr">font-weight</span>=<span class="string">"bold"</span>&gt;</span>Server<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">g</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">path</span> <span class="attr">fill</span>=<span class="string">"pink"</span> <span class="attr">d</span>=<span class="string">"m 370 142 l -25 36 13 0 0 55 24 0 0 -55 13 0 -25 -36"</span> <span class="attr">stroke</span>=<span class="string">"#EC9694"</span> <span class="attr">stroke-width</span>=<span class="string">"2"</span>&gt;</span><span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">g</span> <span class="attr">transform</span>=<span class="string">"rotate(-180 397 189)"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">path</span> <span class="attr">fill</span>=<span class="string">"pink"</span> <span class="attr">d</span>=<span class="string">"m 370 142 l -25 36 13 0 0 55 24 0 0 -55 13 0 -25 -36"</span> <span class="attr">stroke</span>=<span class="string">"#EC9694"</span> <span class="attr">stroke-width</span>=<span class="string">"2"</span>&gt;</span><span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">g</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">"455"</span> <span class="attr">y</span>=<span class="string">"195"</span> <span class="attr">font-size</span>=<span class="string">"19"</span> <span class="attr">font-weight</span>=<span class="string">"bold"</span>&gt;</span>HTTP/HTTPS<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><hr>
+<p><a href="http://www.w3.org/TR/SVG/propidx.html" target="_blank" rel="external">http://www.w3.org/TR/SVG/propidx.html</a><br><a href="http://api.highcharts.com/highcharts#Renderer" target="_blank" rel="external">http://api.highcharts.com/highcharts#Renderer</a></p>
+<p>Best wish!</p>
+
+            <blockquote>
+              <p>
+                本文地址：
+                <a href="https://mrpeak.github.io/2014/09/06/highchart-svg/" target="_blank" rel="external">https://mrpeak.github.io/2014/09/06/highchart-svg/</a>
+              </p>
+              <footer><cite><a href="https://mrpeak.github.io">@繁书</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2014/09/10/fe-tools/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">一系列JavaScript的基础工具</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2014/05/29/web-ppt/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">PPT 在 Web 端的展示方法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="highchart-svg" data-title="用 Highchart 绘制 SVG" data-url="https://mrpeak.github.io/2014/09/06/highchart-svg/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"niannianzhuaner"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+    
+
+  </article>
+
+
+
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "用 Highchart 绘制 SVG",
+    pic: "https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://mrpeak.github.io/2014/09/06/highchart-svg/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259532513&web_id=1259532513"></script>
+
+
+
+
+
+</body>
+</html>

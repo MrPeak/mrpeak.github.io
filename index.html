@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>繁书 | 记录技术与生活的笔记本</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="undefined">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="繁书">
+<meta property="og:url" content="https://mrpeak.github.io/index.html">
+<meta property="og:site_name" content="繁书">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="繁书">
+<meta name="twitter:description">
+  
+    <link rel="alternative" href="/atom.xml" title="繁书" type="application/atom+xml">
+  
+  <meta name="summary" content="null">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu"  >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">捻捻转儿</h5>
+        <a href="mailto:undefined" title="gfeng.peak@gmail.com" class="mail">gfeng.peak@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect active">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            文章
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            标签
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/mrpeak" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/hellopeaker" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/about"  >
+            <i class="icon icon-lg icon-link"></i>
+            关于
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>繁书 &copy; 2016</p>
+  <!--<p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme-->
+  <!--<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>-->
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">繁书</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">繁书</h1>
+    <h5 class="subtitle">记录技术与生活的笔记本</h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      
+  <ul class="post-list">
+  
+    <li class="post-list-item">
+  <article id="post-sass-annotation" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/01/28/sass-annotation/">Sass代码的SassDoc注释</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sass/">Sass</a></li></ul>
+</div>
+        <time datetime="2016-01-28T14:07:25.000Z" itemprop="datePublished" class="post-tiem">
+  2016-01-28
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <p>这篇文章中我们详细说明下开发Sass代码时, 可以书写的注释有哪些类型</p>
+<p>通过<a href="http://sassdoc.com/">SassDoc</a>, 开发者可以像书写JSDoc一样编写Sass的注释代码, 然后通过命令快速生成API文档</p>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2016/01/28/sass-annotation/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+    <li class="post-list-item">
+  <article id="post-sass-type" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2015/12/01/sass-type/">Ruby Sass 与 Lib Sass</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sass/">Sass</a></li></ul>
+</div>
+        <time datetime="2015-12-01T09:00:08.000Z" itemprop="datePublished" class="post-tiem">
+  2015-12-01
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <p>当你用 <a href="http://sass-lang.com/">Sass</a> 用得飞起时，如果突然听说一种叫 <a href="http://libsass.org/"><code>LibSass</code></a>的sass语言已经火起来了，可能你会跳起来说：『LibSass 到底是个什么鬼！我是不是应该舍弃 <code>Ruby Sass</code> 然后投奔 <code>LibSass</code> , 我难道落伍了 ???』</p>
+<p>稍安勿躁，你并没有落伍，读到后面你将了解到 <code>Ruby Sass</code> 跟 <code>LibSass</code> 是相似的产物，而它俩的主要区别体现在<em>接口调用</em>、<em>编译速度</em>、<em>功能支持</em>这三点上</p>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2015/12/01/sass-type/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+    <li class="post-list-item">
+  <article id="post-vscode-guide" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2015/07/02/vscode-guide/">Visual Studio Code 不完全使用指南</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IDE/">IDE</a></li></ul>
+</div>
+        <time datetime="2015-07-02T08:52:56.000Z" itemprop="datePublished" class="post-tiem">
+  2015-07-02
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <p>Visual Studio Code 是“巨硬”基于 <a href="http://electron.atom.io/">Electron</a> 开发的一款轻量级编辑器，主打 web 开发，支持的语言包括：</p>
+<ul>
+<li><code>JavaScript</code></li>
+<li><code>C#</code></li>
+<li><code>JSON</code></li>
+<li><code>HTML</code></li>
+<li><code>Markdown</code></li>
+<li><code>TypeScript</code></li>
+<li><code>CSS, Sass, Less</code></li>
+<li><code>DockerFile</code></li>
+<li><code>Swift</code></li>
+<li><code>Groovy</code></li>
+<li>不断增加中…</li>
+</ul>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2015/07/02/vscode-guide/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+    <li class="post-list-item">
+  <article id="post-mongoose-promise" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2015/03/20/mongoose-promise/">Mongoose 的 Promise 化</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
+</div>
+        <time datetime="2015-03-20T13:05:39.000Z" itemprop="datePublished" class="post-tiem">
+  2015-03-20
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <p>在<code>NodeJS</code>环境下使用<code>MongoDB</code>时，作为数据库管理工具的<code>Mongoose</code>已经成为项目开发的标配，它丰富了Mongo的原生API，为开发者提供了扩展接口，同时以 schema-based 的方式，来操作Mongo</p>
+<p>在开发Node时读写数据库难免要进行频繁且深层次的回调操作好在Mongoose的读写操作都有方法以 <code>promise</code> 对象返回，基于这点，结合其它三方Promise类库，可以避免多重嵌套的发生。（ES6 Generator 能更好的控制异步流程，结合Promise可以更好的解决 Callback Hell）</p>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2015/03/20/mongoose-promise/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+    <li class="post-list-item">
+  <article id="post-cool-fe" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2015/02/23/cool-fe/">不为人知的前端冷知识</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
+</div>
+        <time datetime="2015-02-23T08:06:44.000Z" itemprop="datePublished" class="post-tiem">
+  2015-02-23
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <p>前端已经被玩儿坏了！像<a href="http://www.cnblogs.com/Wayou/p/chrome_dev_tool_style_console.html">console.log()可以向控制台输出图片</a>等炫酷的玩意已经不是什么新闻了，像用||操作符给变量赋默认值也是人尽皆知的旧闻了，今天看到Quora上一个<a href="http://www.quora.com/Web-Development/What-are-the-most-interesting-HTML-JS-DOM-CSS-hacks-that-most-web-developers-dont-know-about?utm_source=html5weekly&amp;utm_medium=email">帖子</a>，瞬间又GET了好多前端技能，一些属于技巧，一些则是闻所未闻的冷知识，一时间还消化不过来。现分类整理出来分享给大家，也补充了一些平时的积累和扩展了一些内容。</p>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2015/02/23/cool-fe/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+    <li class="post-list-item">
+  <article id="post-browserify-text" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2015/01/05/browserify-text/">使用 Browserify 时引入文本文件</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
+</div>
+        <time datetime="2015-01-05T08:33:53.000Z" itemprop="datePublished" class="post-tiem">
+  2015-01-05
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <p>目前来讲模块化已经是Web前端开发的标配了, 主流无非是CommonJS规范和AMD规范</p>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2015/01/05/browserify-text/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+    <li class="post-list-item">
+  <article id="post-heroku-addon" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/12/02/heroku-addon/">解决 Heroku 添加 Add-ons 的问题</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web服务/">web服务</a></li></ul>
+</div>
+        <time datetime="2014-12-02T11:12:11.000Z" itemprop="datePublished" class="post-tiem">
+  2014-12-02
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p><a href="https://www.heroku.com/">Heroku</a> 作为为数不多的<em>优秀</em> 兼顾<em>免费</em> 的云平台，为开发者提供<em>不揪心</em> 的网站托管服务</p>
+<p>为了对你的网站应用方便地添加各式各样的服务，Heroku 提供了 <a href="https://addons.heroku.com/">add-ons</a> 的自助添加功能，即“附加组件”</p>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2014/12/02/heroku-addon/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+    <li class="post-list-item">
+  <article id="post-jquery-events" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/09/26/jquery-events/">查看jQuery元素真正的事件绑定</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+</div>
+        <time datetime="2014-09-26T14:18:02.000Z" itemprop="datePublished" class="post-tiem">
+  2014-09-26
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <p>希望查看页面上某一个元素的事件绑定逻辑的话，该怎么办？</p>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2014/09/26/jquery-events/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+    <li class="post-list-item">
+  <article id="post-fe-tools" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/09/10/fe-tools/">一系列JavaScript的基础工具</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
+</div>
+        <time datetime="2014-09-10T07:06:19.000Z" itemprop="datePublished" class="post-tiem">
+  2014-09-10
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <h3 id="一般的工具"><a href="#一般的工具" class="headerlink" title="一般的工具"></a>一般的工具</h3><p>脚手架工具（帮助启动项目）</p>
+<ul>
+<li><a href="http://yeoman.io/">Yeoman</a>－Yeoman是一个强健且固执的客户端堆栈，其包含一些能帮助开发人员快速构建漂亮web应用程序的工具和框架。</li>
+</ul>
+<p>构建工具（自动化的）</p>
+<ul>
+<li><p><a href="http://gruntjs.com/">Grunt.js</a>—Grunt生态系统非常庞大,并且一直在增长。由于拥有数量庞大的插件可供选择，因此，你可以利用Grunt自动完成任何事,并且花费最少的代价。</p>
+</li>
+<li><p><a href="http://www.pintjs.com/">Pint.js</a>（Grunt的助手 ）－Pint是一个小型，异步的GruntJS运行器，试图解决大规模构建流程中的一些问题。</p>
+</li>
+</ul>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2014/09/10/fe-tools/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+    <li class="post-list-item">
+  <article id="post-highchart-svg" class="article article-type-post" itemprop="blogPost">
+    
+      
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/09/06/highchart-svg/">用 Highchart 绘制 SVG</a>
+    </h3>
+  
+
+
+
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVG/">SVG</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图表/">图表</a></li></ul>
+</div>
+        <time datetime="2014-09-06T02:54:22.000Z" itemprop="datePublished" class="post-tiem">
+  2014-09-06
+</time>
+      </div>
+      <div class="post-content" id="post-content" itemprop="postContent" >
+        
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>做过数据可视化的同学对于<a href="http://www.highcharts.com/">HIGHCHARTS</a>可能并不陌生，甚至是家族的其他两个成员 <a href="http://www.highcharts.com/products/highstock">HIGHSTOCK</a> 和 <a href="http://www.highcharts.com/products/highmaps">HIGHMAPS</a> 也使用过</p>
+<p>它对新老浏览器的兼容性和响应式特性是我们偏爱使用它的主要原因，当然文档齐全和demo丰富也是它的特点</p>
+<p>下面是它的兼容性表格：</p>
+<table>
+<thead>
+<tr>
+<th>Brand</th>
+<th>Versions supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internet Explorer</td>
+<td>6.0 +</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>2.0 +</td>
+</tr>
+<tr>
+<td>Chrome</td>
+<td>1.0 +</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>4.0 +</td>
+</tr>
+<tr>
+<td>Opera</td>
+<td>9.0 +</td>
+</tr>
+<tr>
+<td>iOS (Safari)</td>
+<td>3.0 +</td>
+</tr>
+<tr>
+<td>Android Browser</td>
+<td>2.0 +</td>
+</tr>
+</tbody>
+</table>
+        
+      </div>
+      <div class="post-footer clearfix">
+        <a href="/2014/09/06/highchart-svg/" class="post-more waves-effect waves-button waves-light">MORE</a>
+      </div>
+    
+
+  </article>
+
+
+</li>
+  
+  </ul>
+  
+    <nav id="page-nav">
+      <div class="inner">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+      </div>
+    </nav>
+  
+
+
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "繁书",
+    pic: "https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://mrpeak.github.io/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259532513&web_id=1259532513"></script>
+
+
+
+
+
+</body>
+</html>

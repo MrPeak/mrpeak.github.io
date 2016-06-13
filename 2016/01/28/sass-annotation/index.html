@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Sass代码的SassDoc注释 | 繁书 | 记录技术与生活的笔记本</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Sass">
+  <meta name="description" content="这篇文章中我们详细说明下开发Sass代码时, 可以书写的注释有哪些类型
+通过SassDoc, 开发者可以像书写JSDoc一样编写Sass的注释代码, 然后通过命令快速生成API文档">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sass代码的SassDoc注释">
+<meta property="og:url" content="https://mrpeak.github.io/2016/01/28/sass-annotation/index.html">
+<meta property="og:site_name" content="繁书">
+<meta property="og:description" content="这篇文章中我们详细说明下开发Sass代码时, 可以书写的注释有哪些类型
+通过SassDoc, 开发者可以像书写JSDoc一样编写Sass的注释代码, 然后通过命令快速生成API文档">
+<meta property="og:image" content="http://sassdoc.com/assets/images/illustration.svg">
+<meta property="og:updated_time" content="2016-06-13T09:22:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sass代码的SassDoc注释">
+<meta name="twitter:description" content="这篇文章中我们详细说明下开发Sass代码时, 可以书写的注释有哪些类型
+通过SassDoc, 开发者可以像书写JSDoc一样编写Sass的注释代码, 然后通过命令快速生成API文档">
+<meta name="twitter:image" content="http://sassdoc.com/assets/images/illustration.svg">
+  
+    <link rel="alternative" href="/atom.xml" title="繁书" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;p&gt;这篇文章中我们详细说明下开发Sass代码时, 可以书写的注释有哪些类型&lt;/p&gt;
+&lt;p&gt;通过&lt;a href=&quot;http://sassdoc.com/&quot;&gt;SassDoc&lt;/a&gt;, 开发者可以像书写JSDoc一样编写Sass的注释代码, 然后通过命令快速生成API文档&lt;/p&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">捻捻转儿</h5>
+        <a href="mailto:undefined" title="gfeng.peak@gmail.com" class="mail">gfeng.peak@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            文章
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            标签
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/mrpeak" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/hellopeaker" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/about"  >
+            <i class="icon icon-lg icon-link"></i>
+            关于
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>繁书 &copy; 2016</p>
+  <!--<p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme-->
+  <!--<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>-->
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Sass代码的SassDoc注释</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">Sass代码的SassDoc注释</h1>
+    <h5 class="subtitle">2016-01-28</h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      
+  <article id="post-sass-annotation" class="article article-type-post" itemprop="blogPost">
+    
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sass/">Sass</a></li></ul>
+</div>
+      </div>
+      <div class="post-body">
+
+        <aside class="post-widget" id="post-widget">
+
+          
+          <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+          
+
+          
+          <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原生的注释类型"><span class="post-toc-text">原生的注释类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多行注释"><span class="post-toc-text">多行注释</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#单行注释"><span class="post-toc-text">单行注释</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SassDoc的注释"><span class="post-toc-text">SassDoc的注释</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SassDoc的文件级别注释"><span class="post-toc-text">SassDoc的文件级别注释</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据类型"><span class="post-toc-text">数据类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注释项"><span class="post-toc-text">注释项</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最佳实践"><span class="post-toc-text">最佳实践</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Variable"><span class="post-toc-text">Variable</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Function"><span class="post-toc-text">Function</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Mixin"><span class="post-toc-text">Mixin</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Placeholder"><span class="post-toc-text">Placeholder</span></a></li></ol></li></ol>
+          </nav>
+          
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>这篇文章中我们详细说明下开发Sass代码时, 可以书写的注释有哪些类型</p>
+<p>通过<a href="http://sassdoc.com/" target="_blank" rel="external">SassDoc</a>, 开发者可以像书写JSDoc一样编写Sass的注释代码, 然后通过命令快速生成API文档</p>
+<a id="more"></a>
+<p>SassDoc使用详情, 猛戳<a href="http://sassdoc.com/" target="_blank" rel="external">SassDoc传送门</a></p>
+<p><img src="http://sassdoc.com/assets/images/illustration.svg" alt=""></p>
+<h2 id="原生的注释类型"><a href="#原生的注释类型" class="headerlink" title="原生的注释类型"></a>原生的注释类型</h2><h3 id="多行注释"><a href="#多行注释" class="headerlink" title="多行注释"></a>多行注释</h3><p>Example:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* This is a variant</span><br><span class="line">of a multi-line</span><br><span class="line">comment. */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.selector</span> &#123;</span><br><span class="line">   <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">   <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">   <span class="attribute">text-align</span>: right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：多行注释在编译后会被直接输出到CSS代码中</p>
+</blockquote>
+<h3 id="单行注释"><a href="#单行注释" class="headerlink" title="单行注释"></a>单行注释</h3><p>Example 1:<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Styles for a selector.</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.selector</span> &#123;</span><br><span class="line">   <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">   <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">   <span class="attribute">text-align</span>: right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Example 2:<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.example-rule</span> &#123;</span><br><span class="line"> <span class="attribute">float</span>: left; <span class="comment">// Styles for LTR direction property.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：单行注释在编译环节将被过滤，不会输出到CSS代码中</p>
+</blockquote>
+<h2 id="SassDoc的注释"><a href="#SassDoc的注释" class="headerlink" title="SassDoc的注释"></a>SassDoc的注释</h2><p>SassDoc规范的注释代码不希望被输出到CSS代码中，因此选择了<em>升级版</em> 的<strong>单行注释</strong>作为注释界定符</p>
+<p>Example:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// Here is the description</span></span><br><span class="line"><span class="comment">/// On several lines if you will</span></span><br><span class="line"><span class="comment">/// @author Author's name</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// @access private</span></span><br><span class="line"><span class="comment">/// @alias other-item</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：3个斜杠追加一个空格 <code>///</code> 作为一行注释的起始</p>
+</blockquote>
+<h2 id="SassDoc的文件级别注释"><a href="#SassDoc的文件级别注释" class="headerlink" title="SassDoc的文件级别注释"></a>SassDoc的<strong>文件级别</strong>注释</h2><p>Example:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">////</span></span><br><span class="line"><span class="comment">/// 这是一个文件级别的全局注释</span></span><br><span class="line"><span class="comment">/// 该文件内的所有Item都将被应用该注释的描述</span></span><br><span class="line"><span class="comment">/// @group API</span></span><br><span class="line"><span class="comment">/// @author gaofeng.gf</span></span><br><span class="line"><span class="comment">////</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// 该Item从文件级注释继承了</span></span><br><span class="line"><span class="comment">/// `@group API` 与 `@author gaofeng.gf` 两个注释项</span></span><br><span class="line">@function dummy-function() &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 该Item覆写了 `@author` 这个从全局继承的注释项</span></span><br><span class="line"><span class="comment">/// @author zhouyuan.yz</span></span><br><span class="line">@<span class="keyword">mixin</span> dummy-mixin &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：4个斜杠追加一个空格 <code>////</code> 作为文件级注释的『起始』与『结束』</p>
+</blockquote>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><blockquote>
+<p>SassScript 支持7大数据类型</p>
+</blockquote>
+<ul>
+<li>numbers (如 1.2, 13, 10px)</li>
+<li>strings (如 “foo”, ‘bar’, baz)</li>
+<li>colors (如 blue, #04a3f9, rgba(255, 0, 0, 0.5))</li>
+<li>booleans (如 true, false)</li>
+<li>nulls (如 null)</li>
+<li>lists (以逗号或空格分隔，如 1.5em 1em 0 2em, Helvetica, Arial, sans-serif)</li>
+<li>maps (如 (key1: value1, key2: value2))</li>
+</ul>
+<p>在注释数据类型中分别对应：</p>
+<ul>
+<li>Number</li>
+<li>String</li>
+<li>Color</li>
+<li>Bool</li>
+<li>Null</li>
+<li>List</li>
+<li>Map</li>
+</ul>
+<h2 id="注释项"><a href="#注释项" class="headerlink" title="注释项"></a>注释项</h2><table>
+<thead>
+<tr>
+<th>注释声明</th>
+<th>描述</th>
+<th>别称</th>
+<th>默认值</th>
+<th>使用范围</th>
+<th>补充说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@access</td>
+<td>定义功能块的访问类型</td>
+<td>-</td>
+<td>public</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>为private类型时，sassdoc将在生成文档时忽略此功能块</td>
+</tr>
+<tr>
+<td>@alias</td>
+<td>描述该功能块是否是其他功能块的别称</td>
+<td>-</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@author</td>
+<td>功能块开发者</td>
+<td>-</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@content</td>
+<td>对@content指令的用法进行描述</td>
+<td>-</td>
+<td>-</td>
+<td>mixins</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@deprecated</td>
+<td>标识该功能模块已废弃</td>
+<td>-</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>可在描述项后面追加描述信息</td>
+</tr>
+<tr>
+<td>@example</td>
+<td>功能块使用示例</td>
+<td>-</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>1. 示例内容需要缩进;</td>
+<td></td>
+</tr>
+<tr>
+<td>2.@example（空格）后可追加需要高亮的语法，支持 css, scss, markup, javascript 四种语法</td>
+<td>最佳实践</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>@group</td>
+<td>该功能块所属的分组</td>
+<td>-</td>
+<td>undefined</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>分组定义了功能块在文档中的展示方式</td>
+</tr>
+<tr>
+<td>@ignore</td>
+<td>声明该行注释将不会被生成文档条目</td>
+<td>-</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@link</td>
+<td>链接</td>
+<td>@source</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>超链接（空格）后可追加链接标题</td>
+</tr>
+<tr>
+<td>@name</td>
+<td>自定义功能块在文档中的显示名</td>
+<td>-</td>
+<td>item.context.name</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@output</td>
+<td>对@mixin指令输出的内容进行描述</td>
+<td>@outputs</td>
+<td>-</td>
+<td>mixins</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@parameter</td>
+<td>对功能块的功能参数进行描述</td>
+<td>@arg, @argument, @param</td>
+<td>-</td>
+<td>functions, mixins</td>
+<td>1. 默认值可选</td>
+<td></td>
+</tr>
+<tr>
+<td>2.参数描述可选</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3.如有多类型用竖线符号分隔</td>
+<td>最佳实践</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>@property</td>
+<td>记录映射maps类型变量的属性，使用’.’进行嵌套属性访问</td>
+<td>@prop</td>
+<td>-</td>
+<td>variables</td>
+<td>同@parameter</td>
+</tr>
+<tr>
+<td>@require</td>
+<td>对该功能块依赖其他功能块进行描述</td>
+<td>@requires</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@return</td>
+<td>对函数的返回结果进行描述</td>
+<td>@returns</td>
+<td>-</td>
+<td>functions</td>
+<td>如有多类型用竖线符号分隔</td>
+</tr>
+<tr>
+<td>@see</td>
+<td>记录了与该功能块关联的功能块</td>
+<td>-</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@since</td>
+<td>记录该功能块开始实现的版本号</td>
+<td>-</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>版本号（空格）后可追加版本描述</td>
+</tr>
+<tr>
+<td>@throw</td>
+<td>记录一个被功能块 @error 指令抛出的错误信息</td>
+<td>@throws, @exception</td>
+<td>-</td>
+<td>functions, mixins, placeholders</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@todo</td>
+<td>记录关于功能块的待做任务</td>
+<td>-</td>
+<td>-</td>
+<td>functions, mixins, placeholders, variables</td>
+<td>-</td>
+</tr>
+<tr>
+<td>@type</td>
+<td>描述变量的类型</td>
+<td>-</td>
+<td>-</td>
+<td>variables</td>
+<td>如有多类型用竖线符号分隔</td>
+</tr>
+</tbody>
+</table>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><p><span id="practice_var"></span></p>
+<h3 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">charset</span> <span class="string">"UTF-8"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">////</span></span><br><span class="line"><span class="comment">/// 我是该文件的全局注释，对文件内的所有功能块均生效</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @group Variable</span></span><br><span class="line"><span class="comment">/// @author jack.ma</span></span><br><span class="line"><span class="comment">////</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// 通用错误信息</span></span><br><span class="line"><span class="comment">/// @type String</span></span><br><span class="line"><span class="variable">$error-massege</span>: <span class="string">"编译错误，请检查代码！"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 通用步长</span></span><br><span class="line"><span class="comment">/// @type Number</span></span><br><span class="line"><span class="variable">$step-number</span>: <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 是否是开发版本</span></span><br><span class="line"><span class="comment">/// @type Bool</span></span><br><span class="line"><span class="variable">$is-dev</span>: true;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 通用占位变量</span></span><br><span class="line"><span class="comment">/// @type Null</span></span><br><span class="line"><span class="variable">$placeholder</span>: null;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 通用背景色</span></span><br><span class="line"><span class="comment">/// @type Color</span></span><br><span class="line"><span class="variable">$background-color</span>: rgba(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0.6</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 媒体查询断点映射 - List类型</span></span><br><span class="line"><span class="comment">/// @type List</span></span><br><span class="line"><span class="variable">$breakpoint-list</span>: (</span><br><span class="line">  (small, null, <span class="number">479px</span>, <span class="number">16px</span>, <span class="number">1.3</span>),</span><br><span class="line">  (medium, <span class="number">480px</span>, <span class="number">959px</span>, <span class="number">18px</span>, <span class="number">1.414</span>),</span><br><span class="line">  (large, <span class="number">960px</span>, <span class="number">1099px</span>, <span class="number">18px</span>, <span class="number">1.5</span>),</span><br><span class="line">  (xlarge, <span class="number">1100px</span>, null, <span class="number">21px</span>, <span class="number">1.618</span>)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 媒体查询断点映射 - Map类型</span></span><br><span class="line"><span class="comment">/// @type Map</span></span><br><span class="line"><span class="comment">/// @property &#123;String&#125; breakpoint-map.small - 小屏幕断点</span></span><br><span class="line"><span class="comment">/// @property &#123;String&#125; breakpoint-map.medium - 中等屏幕断点</span></span><br><span class="line"><span class="comment">/// @property &#123;String&#125; breakpoint-map.large [1200px] - 大屏幕断点</span></span><br><span class="line"><span class="variable">$breakpoint-map</span>: (</span><br><span class="line">  small: <span class="number">767px</span>,</span><br><span class="line">  medium: <span class="number">992px</span>,</span><br><span class="line">  large: <span class="number">1200px</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p><span id="practice_fun"></span></p>
+<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">charset</span> <span class="string">"UTF-8"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">////</span></span><br><span class="line"><span class="comment">/// 我是该文件的全局注释，对文件内的所有功能块均生效</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @group Function</span></span><br><span class="line"><span class="comment">/// @author jack.ma</span></span><br><span class="line"><span class="comment">////</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// 检查一个值是否为合法的CSS长度</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @since 1.0.1</span></span><br><span class="line"><span class="comment">/// @access public</span></span><br><span class="line"><span class="comment">/// @param &#123;String&#125; $value - 长度</span></span><br><span class="line"><span class="comment">/// @throw 当值为`1`时抛出错误</span></span><br><span class="line"><span class="comment">/// @return &#123;Bool&#125; 是否是长度</span></span><br><span class="line"><span class="comment">/// @todo 检查 CSS Next 中的长度</span></span><br><span class="line"><span class="comment">/// @link http://gitlab.alibaba-inc.com</span></span><br><span class="line"></span><br><span class="line">@function is-length(<span class="variable">$value</span>) &#123;</span><br><span class="line">  @<span class="keyword">warn</span> <span class="string">"我是警告信息！不会导致编译失败"</span>;</span><br><span class="line">  @<span class="keyword">debug</span> <span class="string">"我是调试信息！不会导致编译失败"</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="keyword">if</span> <span class="variable">$value</span> == 1 &#123;</span><br><span class="line">    @error <span class="string">"我是错误信息：数字1肯定不是参数，编译失败！"</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @return type-of(<span class="variable">$value</span>) != <span class="string">"null"</span> and (str-slice(<span class="variable">$value</span> + <span class="string">""</span>, 1, 4) == <span class="string">"calc"</span> /// 是calc函数来计算的长度</span><br><span class="line">    or (type-of(index(auto inherit initial 0, <span class="variable">$value</span>)) == <span class="string">"number"</span>)</span><br><span class="line">    or (type-of(<span class="variable">$value</span>) == <span class="string">"number"</span> and not(unitless(<span class="variable">$value</span>))));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><span id="practice_mixin"></span></p>
+<h3 id="Mixin"><a href="#Mixin" class="headerlink" title="Mixin"></a>Mixin</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">charset</span> <span class="string">"UTF-8"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">////</span></span><br><span class="line"><span class="comment">/// 我是该文件的全局注释，对文件内的所有功能块均生效</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @group Mixin</span></span><br><span class="line"><span class="comment">/// @author jack.ma</span></span><br><span class="line"><span class="comment">////</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// 提供了快捷设置元素postion的方法，传入null参数可略过一个方位</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @since 0.1.9</span></span><br><span class="line"><span class="comment">/// @group Mixin</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @param &#123;String&#125; $position [relative] - CSS position属性值</span></span><br><span class="line"><span class="comment">/// @param &#123;List&#125; $coordinates [null null null null] - 上、右、下、左 四个边值，可以传入1 ~ 4个值</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @output 输出定位属性值以及四个方位的距离</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @example scss - 使用</span></span><br><span class="line"><span class="comment">///   .element &#123;</span></span><br><span class="line"><span class="comment">///     @include position(absolute, 0 null null 10px);</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @example css - 输出</span></span><br><span class="line"><span class="comment">///   .element &#123;</span></span><br><span class="line"><span class="comment">///     position: absolute;</span></span><br><span class="line"><span class="comment">///     left: 10px;</span></span><br><span class="line"><span class="comment">///     top: 0;</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"><span class="comment">/// @see &#123;mixin&#125; box</span></span><br><span class="line"><span class="comment">/// @require &#123;function&#125; is-length</span></span><br><span class="line"><span class="comment">/// @require &#123;function&#125; unpack</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @ignore 我是将要被忽略的注释行信息</span></span><br><span class="line"></span><br><span class="line">@<span class="keyword">mixin</span> position(<span class="variable">$position</span>: relative, <span class="variable">$coordinates</span>: null null null null) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/// 如果参数是数组</span></span><br><span class="line">  @<span class="keyword">if</span> type-of(<span class="variable">$position</span>) == list &#123;</span><br><span class="line">    <span class="variable">$coordinates</span>: <span class="variable">$position</span>;</span><br><span class="line">    <span class="variable">$position</span>: relative;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="variable">$coordinates</span>: unpack(<span class="variable">$coordinates</span>);</span><br><span class="line"></span><br><span class="line">  <span class="variable">$offsets</span>: (</span><br><span class="line">    top:    nth(<span class="variable">$coordinates</span>, <span class="number">1</span>),</span><br><span class="line">    right:  nth(<span class="variable">$coordinates</span>, <span class="number">2</span>),</span><br><span class="line">    bottom: nth(<span class="variable">$coordinates</span>, <span class="number">3</span>),</span><br><span class="line">    left:   nth(<span class="variable">$coordinates</span>, <span class="number">4</span>)</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="attribute">position</span>: <span class="variable">$position</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="keyword">each</span> <span class="variable">$offset</span>, <span class="variable">$value</span> in <span class="variable">$offsets</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 如果是合法长度</span></span><br><span class="line">    @<span class="keyword">if</span> is-length(<span class="variable">$value</span>) &#123;</span><br><span class="line">      #&#123;<span class="variable">$offset</span>&#125;: <span class="variable">$value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 媒体查询混入</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @since 0.1.9</span></span><br><span class="line"><span class="comment">/// @group Mixin</span></span><br><span class="line"><span class="comment">/// @content 任意CSS样式</span></span><br><span class="line"><span class="comment">/// @access public</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @param &#123;String&#125; $width - CSS宽度值</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @example scss - 使用</span></span><br><span class="line"><span class="comment">///   .element &#123;</span></span><br><span class="line"><span class="comment">///     color: #333;  </span></span><br><span class="line"><span class="comment">///     </span></span><br><span class="line"><span class="comment">///     @include media(320px) &#123;</span></span><br><span class="line"><span class="comment">///       background: red;</span></span><br><span class="line"><span class="comment">///     &#125;</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @example css - 输出</span></span><br><span class="line"><span class="comment">///   .element &#123;</span></span><br><span class="line"><span class="comment">///     color: #333;</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"><span class="comment">///   </span></span><br><span class="line"><span class="comment">///   @media only screen and (max-width: 320px) &#123;</span></span><br><span class="line"><span class="comment">///     .element &#123;</span></span><br><span class="line"><span class="comment">///       background: red;</span></span><br><span class="line"><span class="comment">///     &#125;</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"></span><br><span class="line">@<span class="keyword">mixin</span> media(<span class="variable">$width</span>) &#123;</span><br><span class="line">  @<span class="keyword">media</span> only screen and (max-width: <span class="variable">$width</span>) &#123;</span><br><span class="line">    @<span class="keyword">content</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#333</span>;  </span><br><span class="line">  @<span class="keyword">include</span> media(<span class="number">320px</span>) &#123;</span><br><span class="line">    <span class="attribute">background</span>: red;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><span id="practice_placeholder"></span></p>
+<h3 id="Placeholder"><a href="#Placeholder" class="headerlink" title="Placeholder"></a>Placeholder</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">charset</span> <span class="string">"UTF-8"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">////</span></span><br><span class="line"><span class="comment">/// 我是该文件的全局注释，对文件内的所有功能块均生效</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @group Placeholder</span></span><br><span class="line"><span class="comment">/// @author jack.ma</span></span><br><span class="line"><span class="comment">////</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// 图标通用代码</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @deprecated</span></span><br><span class="line"><span class="comment">/// @name common-icon</span></span><br><span class="line"><span class="comment">/// @example scss - 使用</span></span><br><span class="line"><span class="comment">///   .error-icon &#123;</span></span><br><span class="line"><span class="comment">///     @extend %icon;</span></span><br><span class="line"><span class="comment">///     /* error specific styles... */</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"><span class="comment">///   .info-icon &#123;</span></span><br><span class="line"><span class="comment">///     @extend %icon;</span></span><br><span class="line"><span class="comment">///     /* info specific styles... */</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// @example css - 输出</span></span><br><span class="line"><span class="comment">///   .error-icon, .info-icon &#123;</span></span><br><span class="line"><span class="comment">///     transition: background-color ease .2s;</span></span><br><span class="line"><span class="comment">///     margin: 0 .5em;</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///   .error-icon &#123;</span></span><br><span class="line"><span class="comment">///     /* error specific styles... */</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///   .info-icon &#123;</span></span><br><span class="line"><span class="comment">///     /* info specific styles... */</span></span><br><span class="line"><span class="comment">///   &#125;</span></span><br><span class="line"><span class="comment">/// @todo 大版本迭代时去除</span></span><br><span class="line">%<span class="attribute">icon</span> &#123;</span><br><span class="line">  <span class="attribute">transition</span>: background-color ease .<span class="number">2s</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> .<span class="number">5em</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<blockquote>
+<p>详情查看 <a href="http://sassdoc.com/annotations/" target="_blank" rel="external">http://sassdoc.com/annotations/</a></p>
+</blockquote>
+
+            <blockquote>
+              <p>
+                本文地址：
+                <a href="https://mrpeak.github.io/2016/01/28/sass-annotation/" target="_blank" rel="external">https://mrpeak.github.io/2016/01/28/sass-annotation/</a>
+              </p>
+              <footer><cite><a href="https://mrpeak.github.io">@繁书</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2015/12/01/sass-type/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Ruby Sass 与 Lib Sass</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="sass-annotation" data-title="Sass代码的SassDoc注释" data-url="https://mrpeak.github.io/2016/01/28/sass-annotation/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"niannianzhuaner"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+    
+
+  </article>
+
+
+
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "Sass代码的SassDoc注释",
+    pic: "https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://mrpeak.github.io/2016/01/28/sass-annotation/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259532513&web_id=1259532513"></script>
+
+
+
+
+
+</body>
+</html>

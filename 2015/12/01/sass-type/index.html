@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Ruby Sass 与 Lib Sass | 繁书 | 记录技术与生活的笔记本</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Sass">
+  <meta name="description" content="当你用 Sass 用得飞起时，如果突然听说一种叫 LibSass的sass语言已经火起来了，可能你会跳起来说：『LibSass 到底是个什么鬼！我是不是应该舍弃 Ruby Sass 然后投奔 LibSass , 我难道落伍了 ???』
+稍安勿躁，你并没有落伍，读到后面你将了解到 Ruby Sass 跟 LibSass 是相似的产物，而它俩的主要区别体现在接口调用、编译速度、功能支持这三点上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ruby Sass 与 Lib Sass">
+<meta property="og:url" content="https://mrpeak.github.io/2015/12/01/sass-type/index.html">
+<meta property="og:site_name" content="繁书">
+<meta property="og:description" content="当你用 Sass 用得飞起时，如果突然听说一种叫 LibSass的sass语言已经火起来了，可能你会跳起来说：『LibSass 到底是个什么鬼！我是不是应该舍弃 Ruby Sass 然后投奔 LibSass , 我难道落伍了 ???』
+稍安勿躁，你并没有落伍，读到后面你将了解到 Ruby Sass 跟 LibSass 是相似的产物，而它俩的主要区别体现在接口调用、编译速度、功能支持这三点上">
+<meta property="og:updated_time" content="2016-06-13T09:06:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ruby Sass 与 Lib Sass">
+<meta name="twitter:description" content="当你用 Sass 用得飞起时，如果突然听说一种叫 LibSass的sass语言已经火起来了，可能你会跳起来说：『LibSass 到底是个什么鬼！我是不是应该舍弃 Ruby Sass 然后投奔 LibSass , 我难道落伍了 ???』
+稍安勿躁，你并没有落伍，读到后面你将了解到 Ruby Sass 跟 LibSass 是相似的产物，而它俩的主要区别体现在接口调用、编译速度、功能支持这三点上">
+  
+    <link rel="alternative" href="/atom.xml" title="繁书" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;p&gt;当你用 &lt;a href=&quot;http://sass-lang.com/&quot;&gt;Sass&lt;/a&gt; 用得飞起时，如果突然听说一种叫 &lt;a href=&quot;http://libsass.org/&quot;&gt;&lt;code&gt;LibSass&lt;/code&gt;&lt;/a&gt;的sass语言已经火起来了，可能你会跳起来说：『LibSass 到底是个什么鬼！我是不是应该舍弃 &lt;code&gt;Ruby Sass&lt;/code&gt; 然后投奔 &lt;code&gt;LibSass&lt;/code&gt; , 我难道落伍了 ???』&lt;/p&gt;
+&lt;p&gt;稍安勿躁，你并没有落伍，读到后面你将了解到 &lt;code&gt;Ruby Sass&lt;/code&gt; 跟 &lt;code&gt;LibSass&lt;/code&gt; 是相似的产物，而它俩的主要区别体现在&lt;em&gt;接口调用&lt;/em&gt;、&lt;em&gt;编译速度&lt;/em&gt;、&lt;em&gt;功能支持&lt;/em&gt;这三点上&lt;/p&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">捻捻转儿</h5>
+        <a href="mailto:undefined" title="gfeng.peak@gmail.com" class="mail">gfeng.peak@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            文章
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            标签
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/mrpeak" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/hellopeaker" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/about"  >
+            <i class="icon icon-lg icon-link"></i>
+            关于
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>繁书 &copy; 2016</p>
+  <!--<p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme-->
+  <!--<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>-->
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Ruby Sass 与 Lib Sass</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">Ruby Sass 与 Lib Sass</h1>
+    <h5 class="subtitle">2015-12-01</h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      
+  <article id="post-sass-type" class="article article-type-post" itemprop="blogPost">
+    
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sass/">Sass</a></li></ul>
+</div>
+      </div>
+      <div class="post-body">
+
+        <aside class="post-widget" id="post-widget">
+
+          
+          <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+          
+
+          
+          <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Ruby-Sass"><span class="post-toc-text">Ruby Sass</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#走近-LibSass"><span class="post-toc-text">走近 LibSass</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么选择-LibSass"><span class="post-toc-text">为什么选择 LibSass?</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#兼容-Ruby-Sass-？"><span class="post-toc-text">兼容 Ruby Sass ？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最后的感想"><span class="post-toc-text">最后的感想</span></a></li></ol>
+          </nav>
+          
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>当你用 <a href="http://sass-lang.com/" target="_blank" rel="external">Sass</a> 用得飞起时，如果突然听说一种叫 <a href="http://libsass.org/" target="_blank" rel="external"><code>LibSass</code></a>的sass语言已经火起来了，可能你会跳起来说：『LibSass 到底是个什么鬼！我是不是应该舍弃 <code>Ruby Sass</code> 然后投奔 <code>LibSass</code> , 我难道落伍了 ???』</p>
+<p>稍安勿躁，你并没有落伍，读到后面你将了解到 <code>Ruby Sass</code> 跟 <code>LibSass</code> 是相似的产物，而它俩的主要区别体现在<em>接口调用</em>、<em>编译速度</em>、<em>功能支持</em>这三点上</p>
+<a id="more"></a>
+<p>在这片文章里，连同 <code>Ruby Sass</code> 与 <code>LibSass</code> 的优缺点，我会全面地解释两者的区别</p>
+<h3 id="Ruby-Sass"><a href="#Ruby-Sass" class="headerlink" title="Ruby Sass"></a>Ruby Sass</h3><p>最开始，<code>Sass</code> 是由 <code>Ruby</code> 编写的，如果你刚使用 <code>Sass</code> 不久，你很有可能在使用的是这种 <code>Sass</code>。只要你本地运行了 <code>Ruby</code>，安装了 <code>Sass</code>，运行了编译器，你就可以使用 <code>Sass</code> 所有屌屌的功能跟特性了。</p>
+<p>但是！只要脱离了 <code>Ruby</code> 环境，你的 <code>Ruby Sass</code> 就无法运行了。取决于你的项目文件的大小，<code>Ruby Sass</code> 引擎可能会花很长时间来编译，你的工程越庞大，那编译花费的时间就会越久，在开发大工程时需要尤其注意这点。</p>
+<p>如果你的机器没有运行 <code>Ruby</code>，或者在大工程中需要花费很久来把 <code>sass</code> 编译成 <code>css</code>，你会怎么做？</p>
+<h3 id="走近-LibSass"><a href="#走近-LibSass" class="headerlink" title="走近 LibSass"></a>走近 LibSass</h3><p><code>LibSass</code> 是 Sass引擎的一套 <code>C/C++</code> 接口实现，它不依赖 <code>Ruby</code> 环境就可以把<code>sass</code> 编译成 <code>css</code>，因此它能够被集成到其他语言中去。</p>
+<p>LibSass自己本身不做任何事，它只是一个库，为了能让它工作，你需要一个包装器（或者是接口实现）来运行这个库，同时来编译你的样式表。这其中最常用的 LibSass 几个包装器分别是 <a href="https://github.com/sass/sassc" target="_blank" rel="external">SassC</a>（第一个被开发）；<code>node-sass</code>, <code>grunt-sass</code> – 甚至有一个Ruby实现的包装器</p>
+<p>举例来说，如果项目中运行了 <code>node-sass</code>, 那么 <code>LibSass</code> 就在 <code>node-sass</code> 包装器在 <code>Node.js</code> 里执行编译时作为核心库存在</p>
+<h3 id="为什么选择-LibSass"><a href="#为什么选择-LibSass" class="headerlink" title="为什么选择 LibSass?"></a>为什么选择 LibSass?</h3><p>使用 <code>LibSass</code>, 你不再需要将开发跟 <code>Ruby</code> 环境依赖捆在一起。使用繁多的包装器，你可以轻而易举地将 <code>Sass</code> 编译集成在<a href="http://sass-lang.com/libsass" target="_blank" rel="external">几乎所有语言</a>。</p>
+<p>使用 <code>LibSass</code> 最棒的一点体现在编译速度上，跟 <code>Ruby Sass</code> 相比，<code>LibSass</code> 非常显著的<a href="http://www.moovweb.com/blog/libsass/" target="_blank" rel="external">快了4000%倍</a>。看一看 <code>Ruby Sass</code>, <code>LibSass</code> 以及其它 <code>CSS</code> 预处理器的编译时间对比吧！</p>
+<h3 id="兼容-Ruby-Sass-？"><a href="#兼容-Ruby-Sass-？" class="headerlink" title="兼容 Ruby Sass ？"></a>兼容 Ruby Sass ？</h3><p><code>LibSass</code> 并不完美，很多开发者还在犹豫是否要将代码迁移到 LibSass ，因为涉及到某些功能特性时，它仍然落后于 <code>Ruby Sass</code>。（译者注：目前LibSass 3.3已经完全实现了新旧Ruby Sass的所有功能特性！）</p>
+<p>例如，<code>@at-root</code>, <code>@error</code>，以及很多<em>3.4</em>版本 <code>Sass</code> 的新特性在 <code>LibSass</code> 中都不支持。想全面了解 <code>Sass</code>, <code>LibSass</code>, 以及老Sass引擎的功能支持差异，看一看这个<a href="http://sass-compatibility.github.io/" target="_blank" rel="external">网站</a>吧</p>
+<blockquote>
+<p>LibSass 的前途一片光明!</p>
+</blockquote>
+<p>好消息是 <code>LibSass</code> 很快将追上 <code>Ruby Sass</code> 的脚步，只要这一步实现了，两者之间的功能特性将会继续向前发展。很快我们就能兼顾 <em>LibSass飞快的编译速度</em> 与 <em>Ruby Sass丰富的功能</em> 了。</p>
+<p>去 <a href="http://sassmeister.com/" target="_blank" rel="external">SassMeister</a> 就能快速测试 <code>Ruby Sass</code> 与 <code>LibSass</code> 之间的差异！</p>
+<h3 id="最后的感想"><a href="#最后的感想" class="headerlink" title="最后的感想"></a>最后的感想</h3><p>只要你投入 <code>LibSass</code> 的怀抱, 你就会发现跟使用 <code>Ruby Sass</code> 一样的简单，编译速度却快得多！并且如果你仅仅使用了 <code>Sass</code> 的核心功能，将代码迁移到 <code>LibSass</code> 似乎是没什么风险的。</p>
+<p>如果你、你的团队以及你的项目偏向使用 Ruby Sass，那么就坚持使用它！取决于项目大小，LibSass的速度优势带来的价值可能会<strong>大于</strong>暂时缺失一小部分Sass功能这一劣势损失的价值。</p>
+<p>原文链接：<a href="http://sassbreak.com/ruby-sass-libsass-differences/" target="_blank" rel="external">http://sassbreak.com/ruby-sass-libsass-differences/</a></p>
+
+            <blockquote>
+              <p>
+                本文地址：
+                <a href="https://mrpeak.github.io/2015/12/01/sass-type/" target="_blank" rel="external">https://mrpeak.github.io/2015/12/01/sass-type/</a>
+              </p>
+              <footer><cite><a href="https://mrpeak.github.io">@繁书</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2016/01/28/sass-annotation/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Sass代码的SassDoc注释</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2015/07/02/vscode-guide/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Visual Studio Code 不完全使用指南</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="sass-type" data-title="Ruby Sass 与 Lib Sass" data-url="https://mrpeak.github.io/2015/12/01/sass-type/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"niannianzhuaner"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+    
+
+  </article>
+
+
+
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "Ruby Sass 与 Lib Sass",
+    pic: "https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://mrpeak.github.io/2015/12/01/sass-type/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259532513&web_id=1259532513"></script>
+
+
+
+
+
+</body>
+</html>

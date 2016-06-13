@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>查看jQuery元素真正的事件绑定 | 繁书 | 记录技术与生活的笔记本</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="JavaScript">
+  <meta name="description" content="希望查看页面上某一个元素的事件绑定逻辑的话，该怎么办？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="查看jQuery元素真正的事件绑定">
+<meta property="og:url" content="https://mrpeak.github.io/2014/09/26/jquery-events/index.html">
+<meta property="og:site_name" content="繁书">
+<meta property="og:description" content="希望查看页面上某一个元素的事件绑定逻辑的话，该怎么办？">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/lizi.jpg">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/searchbar.jpg">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console1.jpg">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console2.jpg">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console4.jpg">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console5.jpg">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console6.jpg">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console7.jpg">
+<meta property="og:updated_time" content="2016-06-13T08:32:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="查看jQuery元素真正的事件绑定">
+<meta name="twitter:description" content="希望查看页面上某一个元素的事件绑定逻辑的话，该怎么办？">
+<meta name="twitter:image" content="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/lizi.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="繁书" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;p&gt;希望查看页面上某一个元素的事件绑定逻辑的话，该怎么办？&lt;/p&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">捻捻转儿</h5>
+        <a href="mailto:undefined" title="gfeng.peak@gmail.com" class="mail">gfeng.peak@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            文章
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            标签
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/mrpeak" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/hellopeaker" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/about"  >
+            <i class="icon icon-lg icon-link"></i>
+            关于
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>繁书 &copy; 2016</p>
+  <!--<p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme-->
+  <!--<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>-->
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">查看jQuery元素真正的事件绑定</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">查看jQuery元素真正的事件绑定</h1>
+    <h5 class="subtitle">2014-09-26</h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      
+  <article id="post-jquery-events" class="article article-type-post" itemprop="blogPost">
+    
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+</div>
+      </div>
+      <div class="post-body">
+
+        <aside class="post-widget" id="post-widget">
+
+          
+          <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+          
+
+          
+          <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#举个🌰"><span class="post-toc-text">举个🌰</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#通常想到的方法"><span class="post-toc-text">通常想到的方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#遇到的问题"><span class="post-toc-text">遇到的问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#找到封装后的事件逻辑"><span class="post-toc-text">找到封装后的事件逻辑</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查看调用栈按图索骥"><span class="post-toc-text">查看调用栈按图索骥</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#通过jQuery的私有方法"><span class="post-toc-text">通过jQuery的私有方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用-Chome-扩展插件"><span class="post-toc-text">使用 Chome 扩展插件</span></a></li></ol></li></ol>
+          </nav>
+          
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>希望查看页面上某一个元素的事件绑定逻辑的话，该怎么办？</p>
+<a id="more"></a>
+<h2 id="举个🌰"><a href="#举个🌰" class="headerlink" title="举个🌰"></a>举个🌰</h2><p><img src="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/lizi.jpg" alt=""></p>
+<p>在<a href="http://www.alibaba.com" target="_blank" rel="external">阿里巴巴国际站</a>的SearchBar上</p>
+<p><img src="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/searchbar.jpg" alt=""></p>
+<p>如果想查看红框内元素所绑定事件的逻辑，可能想到的方法可能有哪些呢?</p>
+<h2 id="通常想到的方法"><a href="#通常想到的方法" class="headerlink" title="通常想到的方法"></a>通常想到的方法</h2><ul>
+<li><p>控制台输出对应元素绑定的事件</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getEventListeners(elem)   <span class="comment">//将输出 Object &#123;mouseover: Array[1], mouseout: Array[1], mousedown: Array[1]&#125;</span></span><br></pre></td></tr></table></figure>
+<p>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console1.jpg" alt=""></p>
+<p>  可以看到在这个元素上面绑定的事件和对应的事件处理函数，但是绑定逻辑并不是我们自己的代码，而是找到了 jQuery 封装的事件</p>
+</li>
+</ul>
+<ul>
+<li><p>通过开发者工具的 Elements 面板 —— Event Listener</p>
+<p>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console2.jpg" alt=""></p>
+<p>  然而通过查看 handler 看到的还是 jQuery 的那层壳，也并不是我们想要的</p>
+<blockquote>
+<p>火狐的开发者版会自动标识出绑定了事件的元素（开发者版本自带的 devTools 甩开 firebug 几条街）</p>
+</blockquote>
+<p>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console4.jpg" alt=""><br>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console5.jpg" alt=""></p>
+<p>  火狐也只是把jQuery的壳找到了</p>
+</li>
+</ul>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>以上的方法在 JS Library 的封装下都不能顺利找到事件真正的处理逻辑, 下面依次介绍几种可行的解决方案</p>
+<h2 id="找到封装后的事件逻辑"><a href="#找到封装后的事件逻辑" class="headerlink" title="找到封装后的事件逻辑"></a>找到封装后的事件逻辑</h2><h3 id="查看调用栈按图索骥"><a href="#查看调用栈按图索骥" class="headerlink" title="查看调用栈按图索骥"></a>查看调用栈按图索骥</h3><p>人肉活, 不赘述</p>
+<h3 id="通过jQuery的私有方法"><a href="#通过jQuery的私有方法" class="headerlink" title="通过jQuery的私有方法"></a>通过jQuery的私有方法</h3>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$._data($(<span class="string">'.ui-header-action-rfq'</span>)[<span class="number">0</span>], <span class="string">'events'</span>) <span class="comment">// $._data() 第一个参数必须是DOM元素，不能传入 jQuery 对象和选择器字符串</span></span><br></pre></td></tr></table></figure>
+<p>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console6.jpg" alt=""></p>
+<p>  在返回的对象中找到了时间绑定的处理函数，鼠标浮于handler，右键选择 <code>Show Function Definition</code>，即可跳转至脚本处理逻辑了。</p>
+<blockquote>
+<p><code>$._data</code> 不是公开方法，在1.8 版本之前存在 <code>$.fn.data(‘events’)</code> 方法直接查看对象绑定的函数，为啥被丢弃请看 <a href="http://bugs.jquery.com/ticket/10589" target="_blank" rel="external">http://bugs.jquery.com/ticket/10589</a></p>
+</blockquote>
+<h3 id="使用-Chome-扩展插件"><a href="#使用-Chome-扩展插件" class="headerlink" title="使用 Chome 扩展插件"></a>使用 Chome 扩展插件</h3><p>jQuery Audit 可以方便我们在页面暴露出<code>jQuery</code>全局变量时方便地调试jQ代码, 查看事件逻辑也不是难事!</p>
+<p>如图：选中元素，右侧面板直接查看，爽歪歪</p>
+<p><img src="https://bytebucket.org/mrpeak/imageserver/raw/9dab783dbba514882469c186c379e83bb01010c8/console7.jpg" alt=""></p>
+
+            <blockquote>
+              <p>
+                本文地址：
+                <a href="https://mrpeak.github.io/2014/09/26/jquery-events/" target="_blank" rel="external">https://mrpeak.github.io/2014/09/26/jquery-events/</a>
+              </p>
+              <footer><cite><a href="https://mrpeak.github.io">@繁书</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2014/12/02/heroku-addon/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">解决 Heroku 添加 Add-ons 的问题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2014/09/10/fe-tools/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">一系列JavaScript的基础工具</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="jquery-events" data-title="查看jQuery元素真正的事件绑定" data-url="https://mrpeak.github.io/2014/09/26/jquery-events/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"niannianzhuaner"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+    
+
+  </article>
+
+
+
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "查看jQuery元素真正的事件绑定",
+    pic: "https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://mrpeak.github.io/2014/09/26/jquery-events/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259532513&web_id=1259532513"></script>
+
+
+
+
+
+</body>
+</html>

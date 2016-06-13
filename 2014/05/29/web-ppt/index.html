@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>PPT 在 Web 端的展示方法 | 繁书 | 记录技术与生活的笔记本</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="前端,演示文稿">
+  <meta name="description" content="起最近做的项目有个需求是PPT的在线（Web端）展示，要求做到下面几点:
+
+可以全屏播放
+文档不能被下载
+Flash Free （不依赖Flash插件）
+不用代理可以访问资源（最基本的一点）
+
+承想到的办法：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PPT 在 Web 端的展示方法">
+<meta property="og:url" content="https://mrpeak.github.io/2014/05/29/web-ppt/index.html">
+<meta property="og:site_name" content="繁书">
+<meta property="og:description" content="起最近做的项目有个需求是PPT的在线（Web端）展示，要求做到下面几点:
+
+可以全屏播放
+文档不能被下载
+Flash Free （不依赖Flash插件）
+不用代理可以访问资源（最基本的一点）
+
+承想到的办法：">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/slideshare.png">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/onedrive.png">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/office.png">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/Google-Doc.png">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/zoho.png">
+<meta property="og:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/soho2.png">
+<meta property="og:updated_time" content="2016-06-13T08:02:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PPT 在 Web 端的展示方法">
+<meta name="twitter:description" content="起最近做的项目有个需求是PPT的在线（Web端）展示，要求做到下面几点:
+
+可以全屏播放
+文档不能被下载
+Flash Free （不依赖Flash插件）
+不用代理可以访问资源（最基本的一点）
+
+承想到的办法：">
+<meta name="twitter:image" content="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/slideshare.png">
+  
+    <link rel="alternative" href="/atom.xml" title="繁书" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;h2 id=&quot;起&quot;&gt;&lt;a href=&quot;#起&quot; class=&quot;headerlink&quot; title=&quot;起&quot;&gt;&lt;/a&gt;起&lt;/h2&gt;&lt;p&gt;最近做的项目有个需求是PPT的在线（Web端）展示，要求做到下面几点:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以全屏播放&lt;/li&gt;
+&lt;li&gt;文档不能被下载&lt;/li&gt;
+&lt;li&gt;Flash Free （不依赖Flash插件）&lt;/li&gt;
+&lt;li&gt;不用代理可以访问资源（最基本的一点）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;承&quot;&gt;&lt;a href=&quot;#承&quot; class=&quot;headerlink&quot; title=&quot;承&quot;&gt;&lt;/a&gt;承&lt;/h2&gt;&lt;p&gt;想到的办法：&lt;/p&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">捻捻转儿</h5>
+        <a href="mailto:undefined" title="gfeng.peak@gmail.com" class="mail">gfeng.peak@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            文章
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            标签
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/mrpeak" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/hellopeaker" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/about"  >
+            <i class="icon icon-lg icon-link"></i>
+            关于
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>繁书 &copy; 2016</p>
+  <!--<p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme-->
+  <!--<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>-->
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">PPT 在 Web 端的展示方法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">PPT 在 Web 端的展示方法</h1>
+    <h5 class="subtitle">2014-05-29</h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      
+  <article id="post-web-ppt" class="article article-type-post" itemprop="blogPost">
+    
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/演示文稿/">演示文稿</a></li></ul>
+</div>
+      </div>
+      <div class="post-body">
+
+        <aside class="post-widget" id="post-widget">
+
+          
+          <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+          
+
+          
+          <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#起"><span class="post-toc-text">起</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#承"><span class="post-toc-text">承</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#接"><span class="post-toc-text">接</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#收"><span class="post-toc-text">收</span></a></li></ol>
+          </nav>
+          
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="起"><a href="#起" class="headerlink" title="起"></a>起</h2><p>最近做的项目有个需求是PPT的在线（Web端）展示，要求做到下面几点:</p>
+<ul>
+<li>可以全屏播放</li>
+<li>文档不能被下载</li>
+<li>Flash Free （不依赖Flash插件）</li>
+<li>不用代理可以访问资源（最基本的一点）</li>
+</ul>
+<h2 id="承"><a href="#承" class="headerlink" title="承"></a>承</h2><p>想到的办法：</p>
+<a id="more"></a>
+<ol>
+<li><p>转成pdf，浏览器原生支持播放pdf，<code>&lt;iframe&gt;</code>标签可以完成嵌套功能，如<code>&lt;iframe src=&quot;./XX.pdf&quot; allowfullscreen=&quot;true&quot;&gt;</code></p>
+<ul>
+<li><p>优点：</p>
+<ul>
+<li>浏览器原生支持，网络消耗很小</li>
+<li>文档视图可以放大缩小</li>
+<li>简单（powerponit里直接导出为pdf）</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>无法限制访问者下载文档</li>
+<li>不能实现翻页浏览，只能滚动下拉</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p>转成video（如mp4，<del>swf</del>），上传视频网站（Youtube支持H5播放）然后内嵌到自己的网站，或者自己用H5播放器播放本地视频。</p>
+<p> 给几个转格式的工具网站<br><a href="http://www.dvd-ppt-slideshow.com/ppt_to_dvd/" title="Moyea PPT to DVD Burner Pro - Convert PowerPoint to DVD and convert powerpoint to video" target="_blank" rel="external">PowerPoint to DVD Converter</a><br><a href="http://www.dvd-ppt-slideshow.com/ppt-to-video/" title="Moyea PPT to Video Converter - Convert PowerPoint to Video." target="_blank" rel="external">PowerPoint to Video Converter</a><br><a href="http://www.dvd-ppt-slideshow.com/ppt-to-flash/" title=" Moyea PPT to Flash Converter - Convert PowerPoint to FLV." target="_blank" rel="external">PowerPoint to Web Video Converter</a></p>
+<ul>
+<li><p>优点：</p>
+<ul>
+<li>HTML5 <code>&lt;video&gt;</code> 原生支持</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>麻烦，转格式是个体力活</li>
+<li>不能精确定位帧数</li>
+<li>体验不好</li>
+</ul>
+</li>
+</ul>
+<p><br>     </p>
+</li>
+<li><p>利用 PowerPoint 2010 另存为 .html格式的文件然后用iframe内嵌到网站（没装Office，我没试过）</p>
+</li>
+<li><p>借助第三方的文档分享网站，上传文档，然后取得Embed代码，自己定义样式，嵌入自己的网站。</p>
+<p> 列举几个免费的站点：</p>
+<ul>
+<li><p><a href="http://www.slideshare.net" target="_blank" rel="external">http://www.slideshare.net</a></p>
+<p>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/slideshare.png" alt=""></p>
+<ul>
+<li><p>优点：</p>
+<ul>
+<li>网站很简约，播放界面灰常美观</li>
+<li>展示image达到播放效果，纯HTML代码</li>
+<li>自由控制访问权限，下载权限</li>
+</ul>
+<p>缺点：</p>
+</li>
+<li>需要开代理才能访问资源（致命。。。）</li>
+</ul>
+</li>
+<li><p><a href="http://www.authorstream.com" target="_blank" rel="external">http://www.authorstream.com</a></p>
+</li>
+<li><p><a href="http://www.slideworld.com" target="_blank" rel="external">http://www.slideworld.com</a></p>
+</li>
+<li><p><a href="http://www.slideserve.com" target="_blank" rel="external">http://www.slideserve.com</a></p>
+</li>
+<li><p><a href="http://www.powershow.com/" target="_blank" rel="external">http://www.powershow.com/</a></p>
+</li>
+<li><p><a href="http://www.myplick.com" target="_blank" rel="external">http://www.myplick.com</a></p>
+<p>上面5个网站我一起说，就不贴图了，类似于slideshare，不同点是这五个网站生成的embed代码依赖<strong>Flash</strong>，所以很不推荐。而且和slideshare一样需要<strong>开代理才能加载资源</strong>，一般用户无法访问。</p>
+</li>
+</ul>
+</li>
+<li><p>文档管理类网站的<strong>发布功能</strong></p>
+<ul>
+<li><p><a href="https://onedrive.live.com" target="_blank" rel="external">OneDrive 微软的在线文档服务</a></p>
+<p>  登陆OneDrive，新建文档<br>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/onedrive.png" alt="alt"><br>  编辑文档——文件——共享——嵌入——Copy代码</p>
+<p>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/office.png" alt=""></p>
+<p>  微软自家的文档分享功能本应是最好的选择，可是<strong>不能限制访问者下载</strong>是个弊端。</p>
+</li>
+<li><p><a href="https://docs.google.com" target="_blank" rel="external">GoogleDrive 谷歌的在线文档服务</a></p>
+<p>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/Google-Doc.png" alt=""></p>
+<p>  Google Drive 的访问更苛刻，GAE开代理都上不去，必须用VPN，中国</p>
+</li>
+<li><p><a href="https://docs.zoho.com/home" target="_blank" rel="external">ZOHO</a></p>
+<p>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/zoho.png" alt=""></p>
+<p>  <img src="https://bytebucket.org/mrpeak/imageserver/raw/e0a75ee3b22de372292887a754d99481eef67081/soho2.png" alt=""></p>
+<ul>
+<li><p>优点：</p>
+<ul>
+<li>这个站点很有意思，除了文档管理还有很多其他功能，免费班支持文档共享、发布。</li>
+<li>网站风格很清爽，体验不错。</li>
+<li>以 <strong>SVG</strong> 展示幻灯片，动画效果完整还原</li>
+<li>支持批量上传和处理，简化劳动力</li>
+<li>不用翻墙（O·M·G!!!）</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>IE8等等不支持SVG的浏览器要扑街（Who cares!）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="接"><a href="#接" class="headerlink" title="接"></a>接</h2><p>根据各项因素的考虑</p>
+<p>如国内大多数用户能正常浏览，移动端可以播放，Flash Free，美观程度等等因素</p>
+<p>ZOHO的文档服务是我的最后选择。</p>
+<h2 id="收"><a href="#收" class="headerlink" title="收"></a>收</h2><p>附上ZOHO的展示</p>
+  <iframe src="https://docs.zoho.com/show/publish/34tnz14386829c1d84aa480b3255992e0f3a6" height="490" width="620" name="%E4%BD%BF%E7%94%A8AngularJS%E5%BC%80%E5%8F%91%E4%B8%8B%E4%B8%80%E4%BB%A3WEB%E5%BA%94%E7%94%A8.ppt" scrolling="no" frameborder="0" style="border:1px solid #AABBCC" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+
+
+
+            <blockquote>
+              <p>
+                本文地址：
+                <a href="https://mrpeak.github.io/2014/05/29/web-ppt/" target="_blank" rel="external">https://mrpeak.github.io/2014/05/29/web-ppt/</a>
+              </p>
+              <footer><cite><a href="https://mrpeak.github.io">@繁书</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2014/09/06/highchart-svg/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">用 Highchart 绘制 SVG</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="web-ppt" data-title="PPT 在 Web 端的展示方法" data-url="https://mrpeak.github.io/2014/05/29/web-ppt/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"niannianzhuaner"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+    
+
+  </article>
+
+
+
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "PPT 在 Web 端的展示方法",
+    pic: "https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://mrpeak.github.io/2014/05/29/web-ppt/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259532513&web_id=1259532513"></script>
+
+
+
+
+
+</body>
+</html>

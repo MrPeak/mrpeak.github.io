@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用 Browserify 时引入文本文件 | 繁书 | 记录技术与生活的笔记本</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="前端,工具">
+  <meta name="description" content="目前来讲模块化已经是Web前端开发的标配了, 主流无非是CommonJS规范和AMD规范">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Browserify 时引入文本文件">
+<meta property="og:url" content="https://mrpeak.github.io/2015/01/05/browserify-text/index.html">
+<meta property="og:site_name" content="繁书">
+<meta property="og:description" content="目前来讲模块化已经是Web前端开发的标配了, 主流无非是CommonJS规范和AMD规范">
+<meta property="og:image" content="http://browserify.org/images/browserify.png">
+<meta property="og:updated_time" content="2016-06-13T08:44:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Browserify 时引入文本文件">
+<meta name="twitter:description" content="目前来讲模块化已经是Web前端开发的标配了, 主流无非是CommonJS规范和AMD规范">
+<meta name="twitter:image" content="http://browserify.org/images/browserify.png">
+  
+    <link rel="alternative" href="/atom.xml" title="繁书" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;p&gt;目前来讲模块化已经是Web前端开发的标配了, 主流无非是CommonJS规范和AMD规范&lt;/p&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">捻捻转儿</h5>
+        <a href="mailto:undefined" title="gfeng.peak@gmail.com" class="mail">gfeng.peak@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <ul class="nav flex-col">
+    
+        <li class="waves-block waves-effect">
+          <a href="/"  >
+            <i class="icon icon-lg icon-home"></i>
+            主页
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/archives"  >
+            <i class="icon icon-lg icon-archives"></i>
+            文章
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/tags"  >
+            <i class="icon icon-lg icon-tags"></i>
+            标签
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="https://github.com/mrpeak" target="_blank" >
+            <i class="icon icon-lg icon-github"></i>
+            Github
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="http://weibo.com/hellopeaker" target="_blank" >
+            <i class="icon icon-lg icon-weibo"></i>
+            Weibo
+          </a>
+        </li>
+    
+        <li class="waves-block waves-effect">
+          <a href="/about"  >
+            <i class="icon icon-lg icon-link"></i>
+            关于
+          </a>
+        </li>
+    
+  </ul>
+
+  <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>繁书 &copy; 2016</p>
+  <!--<p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme-->
+  <!--<a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>-->
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">使用 Browserify 时引入文本文件</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">使用 Browserify 时引入文本文件</h1>
+    <h5 class="subtitle">2015-01-05</h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      
+  <article id="post-browserify-text" class="article article-type-post" itemprop="blogPost">
+    
+      <div class="post-meat flex-row">
+        <div class="flex-col">
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
+</div>
+      </div>
+      <div class="post-body">
+
+        <aside class="post-widget" id="post-widget">
+
+          
+          <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+          
+
+          
+          <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RequireJS"><span class="post-toc-text">RequireJS</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SeaJS"><span class="post-toc-text">SeaJS</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Browserify如何实现"><span class="post-toc-text">Browserify如何实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#transform又是什么？"><span class="post-toc-text">transform又是什么？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#怎么引入模板文件"><span class="post-toc-text">怎么引入模板文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#怎么引入样式文件"><span class="post-toc-text">怎么引入样式文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol></li></ol>
+          </nav>
+          
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>目前来讲模块化已经是Web前端开发的标配了, 主流无非是CommonJS规范和AMD规范</p>
+<a id="more"></a>
+<h2 id="RequireJS"><a href="#RequireJS" class="headerlink" title="RequireJS"></a>RequireJS</h2><p>以AMD规范的翘楚 <code>RequireJS</code> 举例，它提供了<code>requirejs-text</code>插件，使得开发者可以异步地引入样式跟模板数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">"some/module"</span>, <span class="string">"text!some/module.html"</span>, <span class="string">"text!some/module.css"</span>],</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">module, html, css</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//the html variable will be the text</span></span><br><span class="line">        <span class="comment">//of the some/module.html file</span></span><br><span class="line">        <span class="comment">//the css variable will be the text</span></span><br><span class="line">        <span class="comment">//of the some/module.css file.</span></span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>这时候我们已经在匿名的回调函数中拿到了<code>html</code>和<code>css</code>的实参字符串，html的模板字符串可以通过<code>innerHTML</code>使用，但是<code>css</code>字符串还需要插入进<code>style</code>才能生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.getElementsByTagName(&quot;style&quot;)[0].innerHTML = css;</span><br></pre></td></tr></table></figure>
+<p>这样一个模块的三个基本要素（模板、样式、脚本）就加载齐全了</p>
+<h2 id="SeaJS"><a href="#SeaJS" class="headerlink" title="SeaJS"></a>SeaJS</h2><p>SeaJS同样使用插件实现了引入文本文件的功能</p>
+<pre><code>`seajs-text`实现了加载模板字符串的功能，
+`seajs-css`实现了加载样式表字符串的功能
+`seajs-style`能够加载一个css文件，和link标签一样
+</code></pre><h2 id="Browserify如何实现"><a href="#Browserify如何实现" class="headerlink" title="Browserify如何实现"></a>Browserify如何实现</h2><p><img src="http://browserify.org/images/browserify.png" alt=""></p>
+<p>作为前端CommonJS化的宠儿，目前模块化开发的绝对主流<code>Browserify</code>，配合<code>HTML5</code>的<code>script</code>标签新属性<code>async</code>，可以无阻塞的加载模块</p>
+<pre><code>需要注意的是：`async`属性一旦使用，就要考虑好`browserify`打包好的那些模块是否有依赖性，如果有依赖性，建议把这些依赖的模块打包为一个模块，不然async标示过的脚本是不会等待`DomReady`之后再执行的，这样很危险
+</code></pre><p>这里不会介绍<code>Browserify</code>的使用场景以及怎么使用，而是为了解决特定的<strong>引入文本文件</strong>的功能，这里默认大家已经知晓了它的简单使用，不明请去<a href="http://browserify.org/" target="_blank" rel="external">官网</a>查阅</p>
+<blockquote>
+<p><code>Browserify</code>使用了<code>transform</code>以及配合<code>transform</code>的相应<em>插件</em>实现了引入模板、样式等等文本文件的功能</p>
+</blockquote>
+<h4 id="transform又是什么？"><a href="#transform又是什么？" class="headerlink" title="transform又是什么？"></a>transform又是什么？</h4><blockquote>
+<p>Transform source code before parsing it for require() calls with the transform function or module name tr</p>
+</blockquote>
+<p>就是说，在解析<code>require</code>调用之前来转换引入的源代码，通过这一层类似于<strong>中间件</strong>的功能，使得<code>browserify</code>在拓展性上大有可为</p>
+<p><em>注</em>：<em>在项目中我习惯使用CLI，用<code>watchify</code>配合<code>transform</code>插件，来实现实时转化和编译</em></p>
+<h4 id="怎么引入模板文件"><a href="#怎么引入模板文件" class="headerlink" title="怎么引入模板文件"></a>怎么引入模板文件</h4><p>我使用过的三个transform插件可以实现：</p>
+<ul>
+<li><a href="https://github.com/JohnPostlethwait/stringify" target="_blank" rel="external">stringify</a></li>
+<li><a href="https://github.com/featurist/html2js-browserify" target="_blank" rel="external">html2js-browserify</a></li>
+<li><a href="https://github.com/robrichard/browserify-compile-templates" target="_blank" rel="external">browserify-compile-templates</a><br>（限定了你使用的模板引擎为Underscore Template，把单独模板放到同一html静态文件，中，通过script的ID来分别调用，灵活性欠妥，不推荐）</li>
+<li><a href="https://github.com/kurttheviking/blissify" target="_blank" rel="external">blissify</a><br>（限定了你使用的模板引擎为Biss，不推荐）</li>
+</ul>
+<p><code>stringify</code>和<code>html2js-browserify</code>非常类似，使用API也类似，一起提及</p>
+<p>项目使用中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install -S-dev browserify</span><br><span class="line">npm install -S-dev watchify </span><br><span class="line">npm install -S-dev stringify</span><br></pre></td></tr></table></figure>
+<p>或者<code>html2js-browserify</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install -S-dev browserify</span><br><span class="line">npm install -S-dev watchify </span><br><span class="line">npm install -S-dev html2js-browserify</span><br></pre></td></tr></table></figure>
+<p>新建<code>html</code>文件，编写需要使用的模板（以<code>Ejs</code>举例）</p>
+<p><code>../templates/header.html</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"home"</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"user"</span>&gt;</span>MyZone<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">isAmin</span>) &#123; %&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span></span><br><span class="line">                Welcome! <span class="tag">&lt;<span class="name">%=</span> <span class="attr">name</span> %&gt;</span> administer</span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在我们的CommonJS模块里就可以使用了</p>
+<p><code>../modules/header/header.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $ = <span class="built_in">require</span>(<span class="string">'jquery'</span>);</span><br><span class="line"><span class="keyword">var</span> _ = <span class="built_in">require</span>(<span class="string">'underscore'</span>);</span><br><span class="line"><span class="keyword">var</span> tpl = <span class="built_in">require</span>(<span class="string">'../../templates/header.html'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    name: <span class="string">'转二'</span>，</span><br><span class="line">    isAdmin: <span class="literal">true</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$(<span class="string">'.header'</span>).html(_.template(tpl)(data));</span><br></pre></td></tr></table></figure>
+<p>最简单的命令行（使用<code>wacthify</code>附加监视功能）如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">browserify -t stringify header.js -o header_bundle.js</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">browserify -t html2js-browserify header.js -o header_bundle.js</span><br></pre></td></tr></table></figure>
+<h4 id="怎么引入样式文件"><a href="#怎么引入样式文件" class="headerlink" title="怎么引入样式文件"></a>怎么引入样式文件</h4><ul>
+<li>无预处理器编译的<ul>
+<li><a href="https://github.com/davidguttman/cssify" target="_blank" rel="external">cssify</a></li>
+<li><a href="https://github.com/cheton/browserify-css" target="_blank" rel="external">browserify-css</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>browserify-css</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install -S-dev browserify</span><br><span class="line">npm install -S-dev watchify </span><br><span class="line">npm install -S-dev browserify-css</span><br></pre></td></tr></table></figure>
+<p><code>app.css</code>:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> url(<span class="string">"modules/foo/index.css"</span>);</span><br><span class="line">@<span class="keyword">import</span> url(<span class="string">"modules/bar/index.css"</span>);</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>app.js</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> css = <span class="built_in">require</span>(<span class="string">'./app.css'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(css);</span><br></pre></td></tr></table></figure>
+<p>编译时如果添加参数 <code>--autoInject=true</code>，那么你的<code>HTML</code>文件的<code>head</code>标签将被插入<code>style</code>，否则需要你手动插入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watchify -t browserify-css [ --autoInject=<span class="literal">true</span> ] app.js &gt; bundle.js</span><br></pre></td></tr></table></figure>
+<p><strong>cssify</strong></p>
+<p>这个插件使用的人最多，可能是因为最简单</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install -S-dev browserify</span><br><span class="line">npm install -S-dev watchify </span><br><span class="line">npm install -S-dev cssify</span><br></pre></td></tr></table></figure>
+<p><code>style.css</code>:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: pink;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>app.js</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> styleNode = <span class="built_in">require</span>(<span class="string">'./style.css'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(styleNode);</span><br></pre></td></tr></table></figure>
+<p>编译时默认将require的样式表插入<code>head</code>标签</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watchify -t cssify app.js &gt; bundle.js</span><br></pre></td></tr></table></figure>
+<ul>
+<li>包含预处理器编译的<ul>
+<li><a href="https://github.com/wilson428/node-lessify" target="_blank" rel="external">node-lessify</a></li>
+<li><a href="https://github.com/capaj/require-stylify" target="_blank" rel="external">require-stylify</a></li>
+</ul>
+</li>
+</ul>
+<p>以<code>require-stylify</code>为例，<code>node-lessify</code>很类似，但是只能编译<code>less</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install -S-dev browserify</span><br><span class="line">npm install -S-dev watchify </span><br><span class="line">npm install -S-dev require-stylify</span><br></pre></td></tr></table></figure>
+<p><code>app.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'./less/main.less'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./sass/sassFile.scss'</span>);</span><br></pre></td></tr></table></figure>
+<p>编译后被引入的样式表就会出现在<code>head</code>标签中了，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watchify -t require-stylify app.js &gt; bundle.js</span><br></pre></td></tr></table></figure>
+<p>实际上样式被编译后，生成的css文件直接存在于预处理文件的同目录下</p>
+<p>即<br>./less/main.css<br>./sass/sassFile.css</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上，个人觉得虽然失去了异步模块的特性，但是作为现代模块工具，<code>Browserify</code>配合<code>script</code>标签的<code>async</code>属性，完全可以适用于生产环境，而且相应灵活性更高，社区的插件更丰富。</p>
+<p><em>感谢阅读</em></p>
+
+            <blockquote>
+              <p>
+                本文地址：
+                <a href="https://mrpeak.github.io/2015/01/05/browserify-text/" target="_blank" rel="external">https://mrpeak.github.io/2015/01/05/browserify-text/</a>
+              </p>
+              <footer><cite><a href="https://mrpeak.github.io">@繁书</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2015/02/23/cool-fe/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">不为人知的前端冷知识</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2014/12/02/heroku-addon/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">解决 Heroku 添加 Add-ons 的问题</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+            
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="browserify-text" data-title="使用 Browserify 时引入文本文件" data-url="https://mrpeak.github.io/2015/01/05/browserify-text/index.html"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"niannianzhuaner"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+    
+
+  </article>
+
+
+
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "使用 Browserify 时引入文本文件",
+    pic: "https://bytebucket.org/mrpeak/imageserver/raw/35eb3651255cf0cf8ad292ee886b49f428c83a45/gyroer_opt.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://mrpeak.github.io/2015/01/05/browserify-text/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+<script src="http://s95.cnzz.com/z_stat.php?id=1259532513&web_id=1259532513"></script>
+
+
+
+
+
+</body>
+</html>
